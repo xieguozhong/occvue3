@@ -83,7 +83,7 @@ function initGridTablePlatformInfo() {
                 <div class="col-xs-3 mintip" :title="title.PlatformInfo.Generic.SystemProductName">
                   SystemProductName<a id="btnradiobox_PlatformInfo_Generic_SystemProductName"
                     style="text-decoration:none" v-on:click="helper.btnradioboxclick($event)">&nbsp;<img
-                      src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;
+                      :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="PlatformInfo.Generic.SystemProductName">
                 </div>
                 <div class="col-xs-3 mintip" :title="title.PlatformInfo.Generic.MLB">
@@ -92,18 +92,18 @@ function initGridTablePlatformInfo() {
                 <div class="col-xs-3 mintip" :title="title.PlatformInfo.Generic.SystemSerialNumber">
                   SystemSerialNumber<a style="text-decoration:none" target="_blank"
                     :href="'https://checkcoverage.apple.com/cn/zh?sn=' + PlatformInfo.Generic.SystemSerialNumber">&nbsp;<img
-                      src="../assets/css/images/check.png" class="ctrlicon"></a>&nbsp;
+                      :src="helper.getImgURL('check')" class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="PlatformInfo.Generic.SystemSerialNumber">
                 </div>
 
                 <div class="col-xs-3 mintip" :title="title.PlatformInfo.Generic.SystemUUID">
                   SystemUUID<a style="text-decoration:none" v-on:click="btnSystemUUIDclick">&nbsp;<img
-                      src="../assets/css/images/generate.png" class="ctrlicon"></a>&nbsp;<input type="text"
+                      :src="helper.getImgURL('generate')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="PlatformInfo.Generic.SystemUUID">
                 </div>
                 <div class="col-xs-3 mintip" :title="title.PlatformInfo.Generic.ROM">
                   ROM<a style="text-decoration:none" v-on:click="opbtnromclick">&nbsp;<img
-                      src="../assets/css/images/generate.png" class="ctrlicon"></a>&nbsp;
+                      :src="helper.getImgURL('generate')" class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="PlatformInfo.Generic.ROM">
                 </div>
                 <div class="col-xs-3 mintip" :title="title.PlatformInfo.Generic.ProcessorType">
@@ -113,7 +113,7 @@ function initGridTablePlatformInfo() {
                 <div class="col-xs-3 mintip" :title="title.PlatformInfo.Generic.SystemMemoryStatus">
                   SystemMemoryStatus<a id="btnradiobox_PlatformInfo_Generic_SystemMemoryStatus"
                     style="text-decoration:none" v-on:click="helper.btnradioboxclick($event)">&nbsp;<img
-                      src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;
+                      :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="PlatformInfo.Generic.SystemMemoryStatus">
                 </div>
               </div>
@@ -194,7 +194,7 @@ function initGridTablePlatformInfo() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_PlatformInfo_MemoryDevices'"><img
-                    :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
               </template>
             </span>
 
@@ -221,7 +221,7 @@ function initGridTablePlatformInfo() {
                 <div class="col-xs-3">
                   TypeDetail<a id="btncheckbox_PlatformInfo_Memory_TypeDetail" style="text-decoration:none"
                     v-on:click="helper.btncheckboxclick($event, 4)">&nbsp;
-                    <img src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;<input type="text"
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="PlatformInfo.Memory.TypeDetail">
                 </div>
 
@@ -381,7 +381,7 @@ function initGridTablePlatformInfo() {
 
             <div class="col-xs-3 mintip" :title="title.PlatformInfo.root.UpdateSMBIOSMode">
               UpdateSMBIOSMode<a id="btnradiobox_PlatformInfo_root_UpdateSMBIOSMode" style="text-decoration:none"
-                v-on:click="helper.btnradioboxclick($event)">&nbsp;<img src="../assets/css/images/edit.png"
+                v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
                   class="ctrlicon"></a>&nbsp;
               <input type="text" class="form-control" v-model="PlatformInfo.root.UpdateSMBIOSMode">
             </div>

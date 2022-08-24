@@ -129,7 +129,7 @@ function initGridTableKernel() {
           <div id="tabbable_Kernel_Add" class="tab-pane fade in active" style="padding-bottom: 5px;">
             <table id="gridtable_Kernel_Add"></table>
             <span class="grey pull-left">
-              <label for="File_Kernel_Add"><img src="../assets/css/images/fileadd.png"
+              <label for="File_Kernel_Add"><img :src="helper.getImgURL('fileadd')"
                   style="padding: 0px; height: 16px; cursor:pointer;">
                 <input type="file" id="File_Kernel_Add" style="position:absolute;clip:rect(0 0 0 0);" accept=".kext"
                   onchange="addFile(this.id);" multiple>
@@ -138,7 +138,7 @@ function initGridTableKernel() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Kernel_Add'"><img
-                    :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -148,7 +148,7 @@ function initGridTableKernel() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Kernel_Block'"><img
-                    :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -159,7 +159,7 @@ function initGridTableKernel() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Kernel_Patch'"><img
-                    :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -205,14 +205,14 @@ function initGridTableKernel() {
                 <div class="col-xs-3 mintip" :title="title.Kernel.Scheme.KernelArch">
                   KernelArch<a id="btnradiobox_Kernel_Scheme_KernelArch" style="text-decoration:none"
                     v-on:click="helper.btnradioboxclick($event)">&nbsp;
-                    <img src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;<input type="text"
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="Kernel.Scheme.KernelArch" />
 
                 </div>
                 <div class="col-xs-3 mintip" :title="title.Kernel.Scheme.KernelCache">
                   KernelCache<a id="btnradiobox_Kernel_Scheme_KernelCache" style="text-decoration:none"
                     v-on:click="helper.btnradioboxclick($event)">&nbsp;
-                    <img src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;<input type="text"
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="Kernel.Scheme.KernelCache" />
 
                 </div>
@@ -244,7 +244,7 @@ function initGridTableKernel() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Kernel_Force'"><img
-                    :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
               </template>
             </span>
           </div>

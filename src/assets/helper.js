@@ -453,7 +453,9 @@ export default class Helper {
         return pagetotal;
     }
 
-
+    getImgURL(imgkey) {
+        return new URL('../static/images/'+ imgkey + '.png', import.meta.url).href
+    }
 
 }
 

@@ -160,7 +160,7 @@ function initGridTableACPI() {
                         <table id="gridtable_ACPI_Add"></table>
                         <span class="grey pull-left">
                             <label for="File_ACPI_Add"
-                                ><img src="../assets/css/images/fileadd.png" style="padding: 0px; height: 16px; cursor: pointer" />
+                                ><img :src="helper.getImgURL('fileadd')" style="padding: 0px; height: 16px; cursor: pointer" />
                                 <input
                                     type="file"
                                     id="File_ACPI_Add"
@@ -174,7 +174,7 @@ function initGridTableACPI() {
                         <span class="grey pull-right">
                             <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_ACPI_Add'">
-                                    <img :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]" /></a
+                                    <img :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]" /></a
                                 >&nbsp;
                             </template>
                         </span>
@@ -185,7 +185,7 @@ function initGridTableACPI() {
                         <span class="grey pull-right">
                             <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_ACPI_Delete'">
-                                    <img :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]" /></a
+                                    <img :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]" /></a
                                 >&nbsp;
                             </template>
                         </span>
@@ -196,7 +196,7 @@ function initGridTableACPI() {
                         <span class="grey pull-right">
                             <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_ACPI_Patch'">
-                                    <img :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]" /></a
+                                    <img :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]" /></a
                                 >&nbsp;
                             </template>
                         </span>

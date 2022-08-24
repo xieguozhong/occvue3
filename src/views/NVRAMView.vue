@@ -149,7 +149,7 @@ function initGridTableNVRAM() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_NVRAM_AddLeft'"><img
-                        :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -158,7 +158,7 @@ function initGridTableNVRAM() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_NVRAM_AddRight'"><img
-                        :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -172,7 +172,7 @@ function initGridTableNVRAM() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_NVRAM_DeleteLeft'"><img
-                        :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -181,7 +181,7 @@ function initGridTableNVRAM() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_NVRAM_DeleteRight'"><img
-                        :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -195,7 +195,7 @@ function initGridTableNVRAM() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_NVRAM_LegacySchemaLeft'"><img
-                        :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -204,7 +204,7 @@ function initGridTableNVRAM() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_NVRAM_LegacySchemaRight'"><img
-                        :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
                   </template>
                 </span>
               </div>

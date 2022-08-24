@@ -115,7 +115,7 @@ function initGridTableDeviceProperties() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_DeviceProperties_AddLeft'"><img
-                        :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -124,7 +124,7 @@ function initGridTableDeviceProperties() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_DeviceProperties_AddRight'"><img
-                        :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -138,7 +138,7 @@ function initGridTableDeviceProperties() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_DeviceProperties_DeleteLeft'"><img
-                        :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -147,7 +147,7 @@ function initGridTableDeviceProperties() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_DeviceProperties_DeleteRight'"><img
-                        :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
                   </template>
                 </span>
               </div>

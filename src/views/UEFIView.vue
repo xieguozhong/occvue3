@@ -99,7 +99,7 @@ function initGridTableUEFI() {
           <div id="tabbable_UEFI_Drivers" class="tab-pane fade in active" style="padding-bottom: 5px;">
             <table id="gridtable_UEFI_Drivers"></table>
             <span class="grey pull-left">
-              <label for="File_UEFI_Drivers"><img src="../assets/css/images/fileadd.png"
+              <label for="File_UEFI_Drivers"><img :src="helper.getImgURL('fileadd')"
                   style="padding: 0px; height: 16px; cursor:pointer;">
                 <input type="file" id="File_UEFI_Drivers" style="position:absolute;clip:rect(0 0 0 0);" accept=".efi"
                   onchange="addFile(this.id);" multiple>
@@ -109,7 +109,7 @@ function initGridTableUEFI() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_UEFI_Drivers'"><img
-                    :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -120,7 +120,7 @@ function initGridTableUEFI() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_UEFI_ReservedMemory'"><img
-                    :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -172,13 +172,13 @@ function initGridTableUEFI() {
                 <div class="col-xs-3 mintip" :title="title.UEFI.AppleInput.AppleEvent">
                   AppleEvent<a id="btnradiobox_UEFI_AppleInput_AppleEvent" style="text-decoration:none"
                     v-on:click="helper.btnradioboxclick($event)">&nbsp;
-                    <img src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;<input type="text"
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="UEFI.AppleInput.AppleEvent">
                 </div>
                 <div class="col-xs-3 mintip" :title="title.UEFI.AppleInput.CustomDelays">
                   CustomDelays<a id="btnradiobox_UEFI_AppleInput_CustomDelays" style="text-decoration:none"
                     v-on:click="helper.btnradioboxclick($event)">&nbsp;
-                    <img src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;<input type="text"
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="UEFI.AppleInput.CustomDelays">
                 </div>
                 <div class="col-xs-3 mintip" :title="title.UEFI.AppleInput.KeyInitialDelay">
@@ -238,7 +238,7 @@ function initGridTableUEFI() {
 
                 <div class="col-xs-3 mintip" :title="title.UEFI.Audio.PlayChime">
                   PlayChime<a id="btnradiobox_UEFI_Audio_PlayChime" style="text-decoration:none"
-                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img src="../assets/css/images/edit.png"
+                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
                       class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="UEFI.Audio.PlayChime">
                 </div>
@@ -290,7 +290,7 @@ function initGridTableUEFI() {
 
                 <div class="col-xs-3 mintip" :title="title.UEFI.Input.KeySupportMode">
                   KeySupportMode<a id="btnradiobox_UEFI_Input_KeySupportMode" style="text-decoration:none"
-                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img src="../assets/css/images/edit.png"
+                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
                       class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="UEFI.Input.KeySupportMode">
                 </div>
@@ -339,35 +339,35 @@ function initGridTableUEFI() {
 
                 <div class="col-xs-3 mintip" :title="title.UEFI.Output.TextRenderer">
                   TextRenderer<a id="btnradiobox_UEFI_Output_TextRenderer" style="text-decoration:none"
-                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img src="../assets/css/images/edit.png"
+                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
                       class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="UEFI.Output.TextRenderer">
                 </div>
 
                 <div class="col-xs-3 mintip" :title="title.UEFI.Output.ConsoleMode">
                   ConsoleMode<a id="btnradiobox_UEFI_Output_ConsoleMode" style="text-decoration:none"
-                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img src="../assets/css/images/edit.png"
+                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
                       class="ctrlicon"></a>&nbsp;<input type="text" class="form-control"
                     v-model="UEFI.Output.ConsoleMode">
                 </div>
 
                 <div class="col-xs-3 mintip" :title="title.UEFI.Output.Resolution">
                   Resolution<a id="btnradiobox_UEFI_Output_Resolution" style="text-decoration:none"
-                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img src="../assets/css/images/edit.png"
+                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
                       class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="UEFI.Output.Resolution">
                 </div>
 
                 <div class="col-xs-3 mintip" :title="title.UEFI.Output.GopPassThrough">
                   GopPassThrough<a id="btnradiobox_UEFI_Output_GopPassThrough" style="text-decoration:none"
-                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img src="../assets/css/images/edit.png"
+                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
                       class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="UEFI.Output.GopPassThrough">
                 </div>
 
                 <div class="col-xs-3 mintip" :title="title.UEFI.Output.UIScale">
                   UIScale<a id="btnradiobox_UEFI_Output_UIScale" style="text-decoration:none"
-                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img src="../assets/css/images/edit.png"
+                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
                       class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="UEFI.Output.UIScale">
                 </div>

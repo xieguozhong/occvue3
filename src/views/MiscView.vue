@@ -100,7 +100,7 @@ function initGridTableMisc() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Misc_BlessOverride'"><img
-                    :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -110,7 +110,7 @@ function initGridTableMisc() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Misc_Entries'"><img
-                    :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -119,7 +119,7 @@ function initGridTableMisc() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Misc_Tools'"><img
-                    :src="'../assets/css/images/' + item + '.png'" class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -130,17 +130,17 @@ function initGridTableMisc() {
 
                 <div class="col-xs-3 mintip" :title="title.Misc.Boot.HibernateMode">
                   HibernateMode<a id="btnradiobox_Misc_Boot_HibernateMode" style="text-decoration:none" v-on:click="helper.btnradioboxclick($event)">&nbsp;
-                    <img src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;<input type="text" class="form-control" v-model="Misc.Boot.HibernateMode" />
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text" class="form-control" v-model="Misc.Boot.HibernateMode" />
                 </div>
 
                 <div class="col-xs-3 mintip" :title="title.Misc.Boot.PickerMode">
                   PickerMode<a id="btnradiobox_Misc_Boot_PickerMode" style="text-decoration:none" v-on:click="helper.btnradioboxclick($event)">&nbsp;
-                    <img src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;<input type="text" class="form-control" v-model="Misc.Boot.PickerMode" />
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text" class="form-control" v-model="Misc.Boot.PickerMode" />
                 </div>
 
                 <div class="col-xs-3 mintip" :title="title.Misc.Boot.PickerVariant">
                   PickerVariant<a id="btnradiobox_Misc_Boot_PickerVariant" style="text-decoration:none" v-on:click="helper.btnradioboxclick($event)">&nbsp;
-                    <img src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;<input type="text" class="form-control" v-model="Misc.Boot.PickerVariant" />
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text" class="form-control" v-model="Misc.Boot.PickerVariant" />
                 </div>
 
                 <div class="col-xs-3 mintip" :title="title.Misc.Boot.TakeoffDelay">
@@ -155,13 +155,13 @@ function initGridTableMisc() {
                 <div class="col-xs-3 mintip" :title="title.Misc.Boot.PickerAttributes">
                   PickerAttributes<a id="btncheckbox_Misc_Boot_PickerAttributes" style="text-decoration:none"
                     v-on:click="helper.btncheckboxclick($event, 4)">&nbsp;
-                    <img src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;<input type="text"
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="Misc.Boot.PickerAttributes" />
                 </div>
                 <div class="col-xs-3 mintip" :title="title.Misc.Boot.LauncherOption">
                   LauncherOption<a id="btnradiobox_Misc_Boot_LauncherOption" style="text-decoration:none"
                     v-on:click="helper.btnradioboxclick($event)">&nbsp;
-                    <img src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;<input type="text"
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="Misc.Boot.LauncherOption" />
                 </div>
                 <div class="col-xs-3 mintip" :title="title.Misc.Boot.LauncherPath">
@@ -207,7 +207,7 @@ function initGridTableMisc() {
                 <div class="col-xs-3 mintip" :title="title.Misc.Debug.DisplayLevel">
                   DisplayLevel<a id="btncheckbox_Misc_Debug_DisplayLevel" style="text-decoration:none"
                     v-on:click="helper.btncheckboxclick($event)">&nbsp;
-                    <img src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;<input type="text"
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="Misc.Debug.DisplayLevel" />
                 </div>
                 <div class="col-xs-3 mintip" :title="title.Misc.Debug.LogModules">
@@ -216,7 +216,7 @@ function initGridTableMisc() {
                 <div class="col-xs-3 mintip" :title="title.Misc.Debug.Target">
                   Target<a id="btncheckbox_Misc_Debug_Target" style="text-decoration:none"
                     v-on:click="helper.btncheckboxclick($event, 2)">&nbsp;
-                    <img src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;<input type="text"
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="Misc.Debug.Target" />
                 </div>
               </div>
@@ -255,7 +255,7 @@ function initGridTableMisc() {
                 <div class="col-xs-3 mintip" :title="title.Misc.Security.ExposeSensitiveData">
                   ExposeSensitiveData<a id="btncheckbox_Misc_Security_ExposeSensitiveData" style="text-decoration:none"
                     v-on:click="helper.btncheckboxclick($event, 2)">&nbsp;
-                    <img src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;<input type="text"
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="Misc.Security.ExposeSensitiveData" />
                 </div>
                 <div class="col-xs-3 mintip" :title="title.Misc.Security.ApECID">
@@ -268,7 +268,7 @@ function initGridTableMisc() {
 
                 <div class="col-xs-3 mintip" :title="title.Misc.Security.Vault">
                   Vault<a id="btnradiobox_Misc_Security_Vault" style="text-decoration:none"
-                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img src="../assets/css/images/edit.png"
+                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
                       class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="Misc.Security.Vault">
                 </div>
@@ -276,14 +276,14 @@ function initGridTableMisc() {
                 <div class="col-xs-3 mintip" :title="title.Misc.Security.ScanPolicy">
                   ScanPolicy<a id="btncheckbox_Misc_Security_ScanPolicy" style="text-decoration:none"
                     v-on:click="helper.btncheckboxclick($event)">&nbsp;
-                    <img src="../assets/css/images/edit.png" class="ctrlicon"></a>&nbsp;
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="Misc.Security.ScanPolicy" />
                 </div>
 
 
                 <div class="col-xs-3 mintip" :title="title.Misc.Security.DmgLoading">
                   DmgLoading<a id="btnradiobox_Misc_Security_DmgLoading" style="text-decoration:none"
-                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img src="../assets/css/images/edit.png"
+                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
                       class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="Misc.Security.DmgLoading">
                 </div>
@@ -291,7 +291,7 @@ function initGridTableMisc() {
 
                 <div class="col-xs-3 mintip" :title="title.Misc.Security.SecureBootModel">
                   SecureBootModel<a id="btnradiobox_Misc_Security_SecureBootModel" style="text-decoration:none"
-                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img src="../assets/css/images/edit.png"
+                    v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
                       class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="Misc.Security.SecureBootModel">
                 </div>
