@@ -1,4 +1,22 @@
-# occ2022
+# opencore 引导程序的配置文件config.plist的在线编辑器
+
+在线使用地址： https://xieguozhong.github.io/occvue3
+
+使用：
+javascript
+jquery
+jqgrid
+bootstrap
+ace-skin
+vue3
+pinia
+vite
+pnpm
+
+
+
+编辑器: 
+vscode volar
 
 This template should help get you started developing with Vue 3 in Vite.
 
@@ -13,17 +31,17 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 ## Project Setup
 
 ```sh
-npm install
+pnpm install
 ```
 
 ### Compile and Hot-Reload for Development
 
 ```sh
-npm run dev
+pnpm dev
 ```
 
 ### Compile and Minify for Production
 
 ```sh
-npm run build
+pnpm build
 ```
