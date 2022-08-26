@@ -8,7 +8,7 @@ import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import Helper from '../assets/helper'
-import  {plistEncode,enabledFormat,formatInteger,getPlistEncodeFunction}  from '../assets/comm'
+import { plistEncode, enabledFormat, formatInteger, getPlistEncodeFunction } from '../assets/comm'
 
 const lang = useLangStore().lang
 const title = useTipsStore()
@@ -16,7 +16,7 @@ const baseStore = useBaseStore()
 const table = userTableStore()
 const popdata = usepopdataStore()
 
-const helper = new Helper(table, lang, baseStore,popdata)
+const helper = new Helper(table, lang, baseStore, popdata)
 
 const { Misc } = storeToRefs(baseStore)
 
@@ -40,7 +40,7 @@ function initGridTableMisc() {
   ];
   let objGT_Misc_Entries = jQuery('#gridtable_Misc_Entries');
   table.addTable('Misc_Entries', objGT_Misc_Entries);
-  const tableHeight = table.tableHeight * 0.64
+  const tableHeight = table.tableHeight * 0.67
   helper.initGridTable(objGT_Misc_Entries, Misc.Entries, colNames, colModel, table.tableWidth, tableHeight);
 
   //BlessOverride
@@ -129,18 +129,24 @@ function initGridTableMisc() {
               <div class="row">
 
                 <div class="col-xs-3 mintip" :title="title.Misc.Boot.HibernateMode">
-                  HibernateMode<a id="btnradiobox_Misc_Boot_HibernateMode" style="text-decoration:none" v-on:click="helper.btnradioboxclick($event)">&nbsp;
-                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text" class="form-control" v-model="Misc.Boot.HibernateMode" />
+                  HibernateMode<a id="btnradiobox_Misc_Boot_HibernateMode" style="text-decoration:none"
+                    v-on:click="helper.btnradioboxclick($event)">&nbsp;
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
+                    class="form-control" v-model="Misc.Boot.HibernateMode" />
                 </div>
 
                 <div class="col-xs-3 mintip" :title="title.Misc.Boot.PickerMode">
-                  PickerMode<a id="btnradiobox_Misc_Boot_PickerMode" style="text-decoration:none" v-on:click="helper.btnradioboxclick($event)">&nbsp;
-                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text" class="form-control" v-model="Misc.Boot.PickerMode" />
+                  PickerMode<a id="btnradiobox_Misc_Boot_PickerMode" style="text-decoration:none"
+                    v-on:click="helper.btnradioboxclick($event)">&nbsp;
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
+                    class="form-control" v-model="Misc.Boot.PickerMode" />
                 </div>
 
                 <div class="col-xs-3 mintip" :title="title.Misc.Boot.PickerVariant">
-                  PickerVariant<a id="btnradiobox_Misc_Boot_PickerVariant" style="text-decoration:none" v-on:click="helper.btnradioboxclick($event)">&nbsp;
-                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text" class="form-control" v-model="Misc.Boot.PickerVariant" />
+                  PickerVariant<a id="btnradiobox_Misc_Boot_PickerVariant" style="text-decoration:none"
+                    v-on:click="helper.btnradioboxclick($event)">&nbsp;
+                    <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
+                    class="form-control" v-model="Misc.Boot.PickerVariant" />
                 </div>
 
                 <div class="col-xs-3 mintip" :title="title.Misc.Boot.TakeoffDelay">

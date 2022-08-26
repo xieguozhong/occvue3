@@ -56,6 +56,13 @@ export const userTableStore = defineStore('table', {
 
         getTable(tbkey) {
             return this.GLOBAL_MAP_TABLE.get(tbkey)
+        },
+
+        setTableHeight() {
+            if(this.GLOBAL_TABLE_HEIGHT === 0) {
+                this.GLOBAL_TABLE_HEIGHT = $(document).height()
+            }
+            
         }
       }
 })

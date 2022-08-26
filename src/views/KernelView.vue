@@ -20,7 +20,9 @@ const helper = new Helper(table, lang, baseStore, popdata)
 
 const { Kernel } = storeToRefs(baseStore)
 
+table.setTableHeight()
 
+const divHeightStyle = {height: parseInt(table.tableHeight*0.5)+1 + 'px'}
 
 onMounted(() => {
   initGridTableKernel()
@@ -28,7 +30,7 @@ onMounted(() => {
 
 function initGridTableKernel() {
 
-  let tableHeight = parseInt(table.tableHeight * 0.43);
+  let tableHeight = parseInt(table.tableHeight * 0.44);
   let kernelTableWidth = table.tableWidth - 15;
   //Add
   let colNames = ['Arch', 'BundlePath', 'Comment', 'ExecutablePath', 'PlistPath', 'MaxKernel', 'MinKernel', 'Enabled'];
@@ -124,7 +126,7 @@ function initGridTableKernel() {
           <li><a data-toggle="tab" href="#tabbable_Kernel_Scheme" class="tablelia">Scheme</a></li>
         </ul>
 
-        <div class="tab-content" style="padding-right:18px;padding-left:2px;">
+        <div class="tab-content" style="padding-right:3px;padding-left:2px;">
 
           <div id="tabbable_Kernel_Add" class="tab-pane fade in active" style="padding-bottom: 5px;">
             <table id="gridtable_Kernel_Add"></table>
@@ -132,7 +134,7 @@ function initGridTableKernel() {
               <label for="File_Kernel_Add"><img :src="helper.getImgURL('fileadd')"
                   style="padding: 0px; height: 16px; cursor:pointer;">
                 <input type="file" id="File_Kernel_Add" style="position:absolute;clip:rect(0 0 0 0);" accept=".kext"
-                  onchange="addFile(this.id);" multiple>
+                  @change="helper.addFile('File_Kernel_Add')" multiple>
               </label>
             </span>
             <span class="grey pull-right">
@@ -164,7 +166,7 @@ function initGridTableKernel() {
             </span>
           </div>
 
-          <div id="tabbable_Kernel_Emulate" class="tab-pane fade in" style="padding-bottom: 5px;">
+          <div id="tabbable_Kernel_Emulate" class="tab-pane fade in" style="padding-bottom: 5px;" :style="divHeightStyle">
 
             <div class="well">
               <div class="row">
@@ -198,7 +200,7 @@ function initGridTableKernel() {
 
           </div>
 
-          <div id="tabbable_Kernel_Scheme" class="tab-pane fade in" style="padding-bottom: 5px;">
+          <div id="tabbable_Kernel_Scheme" class="tab-pane fade in" style="padding-bottom: 5px;" :style="divHeightStyle">
 
             <div class="well">
               <div class="row">
@@ -254,7 +256,7 @@ function initGridTableKernel() {
       </div>
 
 
-      <div class="divatbottom">
+
         <h3 class="header smaller lighter blue"> Quirks</h3>
         <div class="well">
           <div class="row">
@@ -274,7 +276,7 @@ function initGridTableKernel() {
 
           </div>
         </div>
-      </div>
+
 
     </div>
   </div>

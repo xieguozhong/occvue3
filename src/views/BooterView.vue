@@ -7,7 +7,7 @@ import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import Helper from '../assets/helper'
-import  {plistEncode,enabledFormat,formatInteger,getPlistEncodeFunction}  from '../assets/comm'
+import { plistEncode, enabledFormat, formatInteger, getPlistEncodeFunction } from '../assets/comm'
 
 const lang = useLangStore().lang
 const title = useTipsStore()
@@ -37,7 +37,7 @@ function initGridTableBooter() {
   table.setTableWidthAndHeight(objGT_Booter_MmioWhitelist);
 
   table.addTable('Booter_MmioWhitelist', objGT_Booter_MmioWhitelist);
-  const theTableHeight = parseInt(table.tableHeight * 0.43)
+  const theTableHeight = parseInt(table.tableHeight * 0.46)
 
   helper.initGridTable(objGT_Booter_MmioWhitelist, Booter.value.MmioWhitelist, colNames, colModel, table.tableWidth, theTableHeight);
 
@@ -99,33 +99,33 @@ function initGridTableBooter() {
         </div>
       </div>
 
-      <div class="divatbottom">
-        <h3 class="header smaller lighter blue"> Quirks</h3>
-        <div class="well">
-          <div class="row">
-            <template v-for="(item, index) in Booter.Quirks" :key="index">
-              <div v-if="typeof (item) === 'number'" class="col-xs-3 mintip" :title="title.Booter.Quirks[index]">
-                {{ index }}<input type="text" class="form-control" v-model="Booter.Quirks[index]">
-              </div>
-            </template>
-          </div>
+
+      <h3 class="header smaller lighter blue"> Quirks</h3>
+      <div class="well">
+        <div class="row">
+          <template v-for="(item, index) in Booter.Quirks" :key="index">
+            <div v-if="typeof (item) === 'number'" class="col-xs-3 mintip" :title="title.Booter.Quirks[index]">
+              {{ index }}<input type="text" class="form-control" v-model="Booter.Quirks[index]">
+            </div>
+          </template>
+        </div>
 
 
-          <div class="checkbox">
-            <template v-for="(item, index) in Booter.Quirks" :key="index">
-              <label v-if="typeof (item) === 'boolean' && index !== 'EnableForAll'" class="mintip"
-                :title="title.Booter.Quirks[index]">
-                <input type="checkbox" class="ace" v-model="Booter.Quirks[index]" />
-                <span class="lbl"> {{ index }}</span>
-              </label>
-            </template>
-            <label v-show="baseStore.configisMOD === true" class="mintip" :title="title.Booter.Quirks.EnableForAll">
-              <input type="checkbox" class="ace" v-model="Booter.Quirks.EnableForAll" />
-              <span class="lbl"> EnableForAll</span>
+        <div class="checkbox">
+          <template v-for="(item, index) in Booter.Quirks" :key="index">
+            <label v-if="typeof (item) === 'boolean' && index !== 'EnableForAll'" class="mintip"
+              :title="title.Booter.Quirks[index]">
+              <input type="checkbox" class="ace" v-model="Booter.Quirks[index]" />
+              <span class="lbl"> {{ index }}</span>
             </label>
-          </div>
+          </template>
+          <label v-show="baseStore.configisMOD === true" class="mintip" :title="title.Booter.Quirks.EnableForAll">
+            <input type="checkbox" class="ace" v-model="Booter.Quirks.EnableForAll" />
+            <span class="lbl"> EnableForAll</span>
+          </label>
         </div>
       </div>
+
     </div>
   </div>
 </template>

@@ -8,7 +8,7 @@ import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import Helper from '../assets/helper'
-import  {getUUID,plistEncode,enabledFormat,formatInteger}  from '../assets/comm'
+import { getUUID, plistEncode, enabledFormat, formatInteger } from '../assets/comm'
 
 const lang = useLangStore().lang
 const title = useTipsStore()
@@ -16,11 +16,13 @@ const baseStore = useBaseStore()
 const table = userTableStore()
 const popdata = usepopdataStore()
 
-const helper = new Helper(table, lang, baseStore,popdata)
+const helper = new Helper(table, lang, baseStore, popdata)
 
 const { PlatformInfo } = storeToRefs(baseStore)
 
+table.setTableHeight();
 
+const divHeightStyle = {height: parseInt(table.tableHeight*0.56) + 'px'}
 
 onMounted(() => {
   initGridTablePlatformInfo()
@@ -51,7 +53,7 @@ function initGridTablePlatformInfo() {
   ];
   let objGT_PlatformInfo_MemoryDevices = jQuery('#gridtable_PlatformInfo_MemoryDevices');
   table.addTable('PlatformInfo_MemoryDevices', objGT_PlatformInfo_MemoryDevices);
-  helper.initGridTable(objGT_PlatformInfo_MemoryDevices, PlatformInfo.Memory_Devices, colNames, colModel, table.tableWidth - 15, table.tableHeight * 0.36);
+  helper.initGridTable(objGT_PlatformInfo_MemoryDevices, PlatformInfo.Memory_Devices, colNames, colModel, table.tableWidth - 5, table.tableHeight * 0.34);
 }
 
 </script>
@@ -77,7 +79,7 @@ function initGridTablePlatformInfo() {
 
         <div class="tab-content" style="padding-right:18px;padding-left:2px;">
 
-          <div id="tabbable_PlatformInfo_Generic" class="tab-pane fade in active" style="padding-bottom: 5px;">
+          <div id="tabbable_PlatformInfo_Generic" class="tab-pane fade in active" style="padding-bottom: 5px;" :style="divHeightStyle">
             <div class="well">
               <div class="row">
                 <div class="col-xs-3 mintip" :title="title.PlatformInfo.Generic.SystemProductName">
@@ -132,7 +134,7 @@ function initGridTablePlatformInfo() {
             </div>
           </div>
 
-          <div id="tabbable_PlatformInfo_DataHub" class="tab-pane fade in" style="padding-bottom: 5px;">
+          <div id="tabbable_PlatformInfo_DataHub" class="tab-pane fade in" style="padding-bottom: 5px;" :style="divHeightStyle">
             <div class="well">
               <div class="row">
                 <div class="col-xs-3">
@@ -189,7 +191,7 @@ function initGridTablePlatformInfo() {
           </div>
 
 
-          <div id="tabbable_PlatformInfo_Memory" class="tab-pane fade in" style="padding-bottom: 5px;">
+          <div id="tabbable_PlatformInfo_Memory" class="tab-pane fade in" style="padding-bottom: 5px;" :style="divHeightStyle">
             <table id="gridtable_PlatformInfo_MemoryDevices"></table>
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
@@ -233,7 +235,7 @@ function initGridTablePlatformInfo() {
 
 
 
-          <div id="tabbable_PlatformInfo_PlatformNVRAM" class="tab-pane fade in" style="padding-bottom: 5px;">
+          <div id="tabbable_PlatformInfo_PlatformNVRAM" class="tab-pane fade in" style="padding-bottom: 5px;" :style="divHeightStyle">
             <div class="well">
               <div class="row">
                 <div class="col-xs-3">
@@ -266,7 +268,7 @@ function initGridTablePlatformInfo() {
             </div>
           </div>
 
-          <div id="tabbable_PlatformInfo_SMBIOS" class="tab-pane fade in" style="padding-bottom: 5px;">
+          <div id="tabbable_PlatformInfo_SMBIOS" class="tab-pane fade in" style="padding-bottom: 5px;" :style="divHeightStyle">
             <div class="well">
               <div class="row">
                 <div class="col-xs-3">
@@ -374,33 +376,31 @@ function initGridTablePlatformInfo() {
         </div>
       </div>
 
-      <div class="divatbottom">
-        <h3 class="header smaller lighter blue"> </h3>
-        <div class="well">
-          <div class="row">
 
-            <div class="col-xs-3 mintip" :title="title.PlatformInfo.root.UpdateSMBIOSMode">
-              UpdateSMBIOSMode<a id="btnradiobox_PlatformInfo_root_UpdateSMBIOSMode" style="text-decoration:none"
-                v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
-                  class="ctrlicon"></a>&nbsp;
-              <input type="text" class="form-control" v-model="PlatformInfo.root.UpdateSMBIOSMode">
-            </div>
+      <h3 class="header smaller lighter blue"> </h3>
+      <div class="well">
+        <div class="row">
+
+          <div class="col-xs-3 mintip" :title="title.PlatformInfo.root.UpdateSMBIOSMode">
+            UpdateSMBIOSMode<a id="btnradiobox_PlatformInfo_root_UpdateSMBIOSMode" style="text-decoration:none"
+              v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
+                class="ctrlicon"></a>&nbsp;
+            <input type="text" class="form-control" v-model="PlatformInfo.root.UpdateSMBIOSMode">
           </div>
+        </div>
 
-          <div class="checkbox" style="margin-top: 20px">
-            <template v-for="(item, index) in PlatformInfo.root" :key="index">
-              <label v-if="typeof (item) === 'boolean'" class="mintip" :title="title.PlatformInfo.root[index]">
-                <input type="checkbox" class="ace" v-model="PlatformInfo.root[index]" />
-                <span class="lbl"> {{ index }}</span>
-              </label>
-            </template>
-
-
-
-          </div>
+        <div class="checkbox" style="margin-top: 20px">
+          <template v-for="(item, index) in PlatformInfo.root" :key="index">
+            <label v-if="typeof (item) === 'boolean'" class="mintip" :title="title.PlatformInfo.root[index]">
+              <input type="checkbox" class="ace" v-model="PlatformInfo.root[index]" />
+              <span class="lbl"> {{ index }}</span>
+            </label>
+          </template>
 
         </div>
+
       </div>
+
 
 
 

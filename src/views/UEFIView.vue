@@ -4,7 +4,7 @@ import { userTableStore } from '../stores/table'
 import { useTipsStore } from '../stores/Tips_zh-CN'
 import { useLangStore } from '../stores/lang'
 import { usepopdataStore } from '../stores/popdata'
-import { onMounted } from 'vue'
+import { onMounted,computed } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import Helper from '../assets/helper'
@@ -20,10 +20,14 @@ const helper = new Helper(table, lang, baseStore, popdata)
 
 const { UEFI } = storeToRefs(baseStore)
 
-
-
 onMounted(() => {
   initGridTableUEFI()
+})
+
+table.setTableHeight()
+
+const divHeight = computed(()=>{
+  return parseInt(table.tableHeight*0.62)-1
 })
 
 function initGridTableUEFI() {
@@ -38,7 +42,7 @@ function initGridTableUEFI() {
   let objGT_UEFI_Drivers = jQuery('#gridtable_UEFI_Drivers');
 
   table.addTable('UEFI_Drivers', objGT_UEFI_Drivers);
-  const tbheight = table.tableHeight * 0.55
+  const tbheight = table.tableHeight * 0.56
   helper.initGridTable(objGT_UEFI_Drivers, UEFI.Drivers, colNames, colModel, table.tableWidth, tbheight);
 
   const typeValues = {
@@ -102,7 +106,7 @@ function initGridTableUEFI() {
               <label for="File_UEFI_Drivers"><img :src="helper.getImgURL('fileadd')"
                   style="padding: 0px; height: 16px; cursor:pointer;">
                 <input type="file" id="File_UEFI_Drivers" style="position:absolute;clip:rect(0 0 0 0);" accept=".efi"
-                  onchange="addFile(this.id);" multiple>
+                  @change="helper.addFile('File_UEFI_Drivers')" multiple>
               </label>
             </span>
 
@@ -127,7 +131,7 @@ function initGridTableUEFI() {
 
 
 
-          <div id="tabbable_UEFI_APFS" class="tab-pane fade in" style="padding-bottom: 5px;">
+          <div id="tabbable_UEFI_APFS" class="tab-pane fade in" style="padding-bottom: 5px;" :style="{'height': divHeight +'px'}">
             <div class="well">
 
               <div class="row">
@@ -165,7 +169,7 @@ function initGridTableUEFI() {
             </div>
           </div>
 
-          <div id="tabbable_UEFI_AppleInput" class="tab-pane fade in" style="padding-bottom: 5px;">
+          <div id="tabbable_UEFI_AppleInput" class="tab-pane fade in" style="padding-bottom: 5px;" :style="{'height': divHeight +'px'}">
             <div class="well">
 
               <div class="row">
@@ -220,7 +224,7 @@ function initGridTableUEFI() {
           </div>
 
 
-          <div id="tabbable_UEFI_Audio" class="tab-pane fade in" style="padding-bottom: 5px;">
+          <div id="tabbable_UEFI_Audio" class="tab-pane fade in" style="padding-bottom: 5px;" :style="{'height': divHeight +'px'}">
             <div class="well">
 
               <div class="row">
@@ -280,7 +284,7 @@ function initGridTableUEFI() {
             </div>
           </div>
 
-          <div id="tabbable_UEFI_Input" class="tab-pane fade in" style="padding-bottom: 5px;">
+          <div id="tabbable_UEFI_Input" class="tab-pane fade in" style="padding-bottom: 5px;" :style="{'height': divHeight +'px'}">
             <div class="well">
               <div class="row">
                 <div class="col-xs-3 mintip" :title="title.UEFI.Input.KeyForgetThreshold">
@@ -330,7 +334,7 @@ function initGridTableUEFI() {
           </div>
 
 
-          <div id="tabbable_UEFI_Output" class="tab-pane fade in" style="padding-bottom: 5px;">
+          <div id="tabbable_UEFI_Output" class="tab-pane fade in" style="padding-bottom: 5px;" :style="{'height': divHeight +'px'}">
             <div class="well">
 
               <div class="row">
@@ -425,7 +429,7 @@ function initGridTableUEFI() {
           </div>
 
 
-          <div id="tabbable_UEFI_ProtocolOverrides" class="tab-pane fade in" style="padding-bottom: 5px;">
+          <div id="tabbable_UEFI_ProtocolOverrides" class="tab-pane fade in" style="padding-bottom: 5px;" :style="{'height': divHeight +'px'}">
             <div class="well">
               <div class="checkbox">
                 <label class="mintip" :title="title.UEFI.ProtocolOverrides.AppleAudio">
@@ -505,7 +509,7 @@ function initGridTableUEFI() {
               </div>
             </div>
           </div>
-          <div id="tabbable_UEFI_Quirks" class="tab-pane fade in" style="padding-bottom: 5px;">
+          <div id="tabbable_UEFI_Quirks" class="tab-pane fade in" style="padding-bottom: 5px;" :style="{'height': divHeight +'px'}">
             <div class="well">
               <div class="row">
                 <template v-for="(item, index) in UEFI.Quirks" :key="index">
@@ -530,7 +534,7 @@ function initGridTableUEFI() {
         </div>
       </div>
 
-      <div class="divatbottom">
+      
         <h3 class="header smaller lighter blue"></h3>
         <div class="well">
           <div class="checkbox">
@@ -540,7 +544,7 @@ function initGridTableUEFI() {
             </label>
           </div>
         </div>
-      </div>
+      
     </div>
   </div>
 </template>

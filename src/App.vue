@@ -26,7 +26,7 @@ const base = useBaseStore()
         <div class="main-content" >
             <div class="main-content-inner">
                 <Tools />
-                <div class="page-content" style="padding-right:0px;padding-left:0px;">
+                <div class="page-content" style="padding-right:0px;padding-left:0px;padding-bottom: 0px;">
                     <div class="container-fluid" >
                         <ACPIView v-show="base.getRoot === 'ACPI'"></ACPIView>
                         <BooterView v-show="base.getRoot === 'Booter'"></BooterView>

@@ -457,3 +457,69 @@ export function showTipModal(content, msgtype = 'success') {
 	}  
 	return args[0];
 }
+
+//用JSzip处理kext中Plugin中的文件,单独处理Kernel_Add处添加文件
+export function handFile(ff, thetable) {
+    const sfl = new Set(), sfonly = new Set();
+    //const jzfile = new JSZip();
+    JSZip.loadAsync(ff)
+        .then(function(zip) {
+            zip.forEach( (relativePath) => {  
+                sfl.add(relativePath);
+
+                //这里大部分都是相同的会被过滤掉
+                sfonly.add(relativePath.substring(0,findStrAssIndex(relativePath,'/',1)));
+
+                const pindex = relativePath.indexOf('PlugIns');
+                if(pindex > -1) {
+                    const p2index = findStrAssIndex(relativePath,'/',4);
+                    if(p2index > -1) {
+                        sfonly.add(relativePath.substring(0, p2index));
+                    }
+                    
+                }
+                
+            });
+
+            let maxid = getMaxrowid(thetable), newData = null;
+
+            sfonly.forEach((kname) => {
+                const lastdotindex = kname.lastIndexOf('.');
+                const lastslaindex = kname.lastIndexOf('/') + 1;
+                const knamekey = kname.substring(lastslaindex,lastdotindex);
+                let ExecutablePath = '', PlistPath = '';
+                
+                if(sfl.has(kname + '/Contents/MacOS/' + knamekey)) {
+                    ExecutablePath = 'Contents/MacOS/' + knamekey;
+                }
+                if(sfl.has(kname + '/Contents/Info.plist')) {
+                    PlistPath = 'Contents/Info.plist';
+                }
+
+                newData = { Arch:'',BundlePath:kname,Comment:'',ExecutablePath:ExecutablePath,PlistPath:PlistPath,MaxKernel:'',MinKernel:'',Enabled:"YES"};
+                maxid = maxid + 1;
+                
+                thetable.jqGrid('addRowData', maxid, newData, 'last');
+
+            });
+
+        }, function (e) {
+            console.log(e.message);
+        });
+}
+
+
+/**
+ * 查找字符串第几次出现的位置
+ * @param {Object} str 源字符串
+ * @param {Object} cha 要查询的字符或字符串
+ * @param {Object} num 第几次出现，第一次出现用1表示
+ */
+ function findStrAssIndex(str, cha, num=1) {
+    let x = str.indexOf(cha);
+    num -= 1;
+    for (let i = 0; i < num; i++) {
+        x = str.indexOf(cha, x + 1);
+    }
+    return x;
+}

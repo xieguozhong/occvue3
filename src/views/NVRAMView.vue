@@ -7,7 +7,7 @@ import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import Helper from '../assets/helper'
-import  {plistEncode,enabledFormat,formatInteger}  from '../assets/comm'
+import { plistEncode, enabledFormat, formatInteger } from '../assets/comm'
 
 const lang = useLangStore().lang
 const title = useTipsStore()
@@ -28,6 +28,7 @@ function initGridTableNVRAM() {
   let colNames = ['Devices', 'id'],
     tableWidth = table.tableHalfWidth - 7
     ;
+  const tableHeight = table.tableHeight * 0.54
 
   //AddLeft
   let colModel = [
@@ -37,7 +38,7 @@ function initGridTableNVRAM() {
 
   let objGT_NVRAM_AddLeft = jQuery('#gridtable_NVRAM_AddLeft');
   table.addTable('NVRAM_AddLeft', objGT_NVRAM_AddLeft);
-  helper.initGridTable(objGT_NVRAM_AddLeft, NVRAM.value.AddLeft, colNames, colModel, tableWidth);
+  helper.initGridTable(objGT_NVRAM_AddLeft, NVRAM.value.AddLeft, colNames, colModel, tableWidth, tableHeight);
 
 
   //AddRight
@@ -51,7 +52,7 @@ function initGridTableNVRAM() {
   ];
   let objGT_NVRAM_AddRight = jQuery('#gridtable_NVRAM_AddRight');
   table.addTable('NVRAM_AddRight', objGT_NVRAM_AddRight);
-  helper.initGridTable(objGT_NVRAM_AddRight, NVRAM.value.AddRight, colNames, colModel, tableWidth, 0, false);
+  helper.initGridTable(objGT_NVRAM_AddRight, NVRAM.value.AddRight, colNames, colModel, tableWidth, tableHeight, false);
 
 
 
@@ -71,7 +72,7 @@ function initGridTableNVRAM() {
   ];
   let objGT_NVRAM_DeleteLeft = jQuery('#gridtable_NVRAM_DeleteLeft');
   table.addTable('NVRAM_DeleteLeft', objGT_NVRAM_DeleteLeft);
-  helper.initGridTable(objGT_NVRAM_DeleteLeft, NVRAM.value.DeleteLeft, colNames, colModel, tableWidth);
+  helper.initGridTable(objGT_NVRAM_DeleteLeft, NVRAM.value.DeleteLeft, colNames, colModel, tableWidth, tableHeight);
 
 
   //DeleteRight
@@ -84,7 +85,7 @@ function initGridTableNVRAM() {
   ];
   let objGT_NVRAM_DeleteRight = jQuery('#gridtable_NVRAM_DeleteRight');
   table.addTable('NVRAM_DeleteRight', objGT_NVRAM_DeleteRight);
-  helper.initGridTable(objGT_NVRAM_DeleteRight, NVRAM.value.DeleteRight, colNames, colModel, tableWidth, 0, false);
+  helper.initGridTable(objGT_NVRAM_DeleteRight, NVRAM.value.DeleteRight, colNames, colModel, tableWidth, tableHeight, false);
 
   //增加行选中事件
   objGT_NVRAM_DeleteLeft.jqGrid('setGridParam', {
@@ -101,7 +102,7 @@ function initGridTableNVRAM() {
   ];
   let objGT_NVRAM_LegacySchemaLeft = jQuery('#gridtable_NVRAM_LegacySchemaLeft');
   table.addTable('NVRAM_LegacySchemaLeft', objGT_NVRAM_LegacySchemaLeft);
-  helper.initGridTable(objGT_NVRAM_LegacySchemaLeft, NVRAM.value.LegacySchemaLeft, colNames, colModel, tableWidth);
+  helper.initGridTable(objGT_NVRAM_LegacySchemaLeft, NVRAM.value.LegacySchemaLeft, colNames, colModel, tableWidth, tableHeight);
 
 
   //LegacySchemaRight
@@ -114,7 +115,7 @@ function initGridTableNVRAM() {
   ];
   let objGT_NVRAM_LegacySchemaRight = jQuery('#gridtable_NVRAM_LegacySchemaRight');
   table.addTable('NVRAM_LegacySchemaRight', objGT_NVRAM_LegacySchemaRight);
-  helper.initGridTable(objGT_NVRAM_LegacySchemaRight, NVRAM.value.LegacySchemaRight, colNames, colModel, tableWidth, 0, false);
+  helper.initGridTable(objGT_NVRAM_LegacySchemaRight, NVRAM.value.LegacySchemaRight, colNames, colModel, tableWidth, tableHeight, false);
 
   //增加行选中事件
   objGT_NVRAM_LegacySchemaLeft.jqGrid('setGridParam', {
@@ -130,7 +131,7 @@ function initGridTableNVRAM() {
 
 <template>
   <div class="row">
-    
+
     <div class="col-xs-12">
 
       <div class="tabbable">
@@ -213,21 +214,21 @@ function initGridTableNVRAM() {
         </div>
       </div>
 
-      <div class="divatbottom">
-        <h3 class="header smaller lighter blue"></h3>
-        <div class="well">
 
-          <div class="checkbox">
-            <template v-for="(item, index) in NVRAM.root" :key="index">
-              <label v-if="typeof (item) === 'boolean'" class="mintip" :title="title.NVRAM[index]">
-                <input type="checkbox" class="ace" v-model="NVRAM.root[index]" />
-                <span class="lbl"> {{ index }}</span>
-              </label>
-            </template>
-          </div>
+      <h3 class="header smaller lighter blue"></h3>
+      <div class="well">
 
+        <div class="checkbox">
+          <template v-for="(item, index) in NVRAM.root" :key="index">
+            <label v-if="typeof (item) === 'boolean'" class="mintip" :title="title.NVRAM[index]">
+              <input type="checkbox" class="ace" v-model="NVRAM.root[index]" />
+              <span class="lbl"> {{ index }}</span>
+            </label>
+          </template>
         </div>
+
       </div>
+
 
     </div>
 

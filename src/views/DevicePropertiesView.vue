@@ -31,7 +31,7 @@ function initGridTableDeviceProperties() {
   let objGT_DeviceProperties_AddLeft = jQuery('#gridtable_DeviceProperties_AddLeft');
   table.setTableWidthAndHeight(objGT_DeviceProperties_AddLeft);
   table.addTable('DeviceProperties_AddLeft', objGT_DeviceProperties_AddLeft);
-  const tableHeight = table.tableHeight * 0.64
+  const tableHeight = table.tableHeight * 0.65
   helper.initGridTable(objGT_DeviceProperties_AddLeft, DeviceProperties.value.AddLeft, colNames, colModel, table.tableHalfWidth, tableHeight);
 
 
@@ -106,7 +106,7 @@ function initGridTableDeviceProperties() {
 
         </ul>
 
-        <div class="tab-content" style="padding-right:18px;padding-left:2px;">
+        <div class="tab-content" style="padding-right:11px;padding-left:2px;">
 
           <div id="tabbable_DeviceProperties_Add" class="tab-pane fade in active" style="padding-bottom: 5px;">
             <div class="row">
