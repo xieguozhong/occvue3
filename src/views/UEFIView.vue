@@ -8,7 +8,7 @@ import { onMounted,computed } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import Helper from '../assets/helper'
-import  {plistEncode,enabledFormat,formatInteger,getPlistEncodeFunction}  from '../assets/comm'
+import  {plistEncode,enabledFormat,formatInteger,getPlistEncodeFunction,showTipModal}  from '../assets/comm'
 
 const lang = useLangStore().lang
 const title = useTipsStore()

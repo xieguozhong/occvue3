@@ -5,8 +5,8 @@ import { useTipsStore } from '../stores/Tips_zh-CN'
 import { userTableStore } from '../stores/table'
 import Helper from '../assets/helper'
 import Generateplist from '../assets/generateplist'
-import  {PlistParser}  from '../assets/plistparser'
-import {getTypeof,b64Decode,fillLangString,copyDatatoClipboard,showTipModal} from '../assets/comm'
+import  PlistParser  from '../assets/plistparser'
+import { getTypeof, b64Decode, fillLangString, copyDatatoClipboard, showTipModal } from '../assets/comm'
 
 
 import { onMounted, watch } from 'vue'
@@ -17,20 +17,21 @@ const table = userTableStore()
 const lang = useLangStore().lang
 const helper = new Helper(table, title, base)
 
+
 //查看有没有表格在被编辑中
 function checkOneditTable() {
 
-    if(table.GLOBAL_SET_ONEDITTABLE.size === 0) {
+    if (table.onEditTableList.size === 0) {
         return '';
     }
 
     const newset = new Set();
-    for(let it of table.GLOBAL_SET_ONEDITTABLE) {
+    for (let it of table.onEditTableList) {
         let arrit = it.split('_');
         newset.add(arrit[1] + " | " + arrit[2]);
-        
+
     }
-    
+
     let newmsg = '-'.repeat(30) + '<br>' + Array.from(newset).join('<br>') + '<br>' + '-'.repeat(30);
     return fillLangString(lang.editingtablemessage, newmsg);
 }
@@ -38,13 +39,13 @@ function checkOneditTable() {
 //保存按钮
 function savePlist() {
     let cotstring = checkOneditTable();
-    if(cotstring !== "") {
+    if (cotstring !== "") {
         toastr.error(cotstring);
         return;
     }
-    const genplist = new Generateplist(table,lang, base)
+    const genplist = new Generateplist(table, lang, base)
     let xmlcontext = genplist.getAllPlist();
-    let blob = new Blob([xmlcontext], {type: "text/plain;charset=utf-8"});
+    let blob = new Blob([xmlcontext], { type: "text/plain;charset=utf-8" });
     saveAs(blob, "config.plist");
     showTipModal(lang.downplistSuccess, 'success');
 }
@@ -52,14 +53,14 @@ function savePlist() {
 //复制按钮
 function copyPlist() {
     let cotstring = checkOneditTable();
-    if(cotstring !== "") {
+    if (cotstring !== "") {
         toastr.error(cotstring);
         return;
     }
-    const genplist = new Generateplist(table,lang, base)
-	let xmlcontext = genplist.getAllPlist();
-	copyDatatoClipboard(xmlcontext);
-	showTipModal(lang.copyplistSuccess, 'success');
+    const genplist = new Generateplist(table, lang, base)
+    let xmlcontext = genplist.getAllPlist();
+    copyDatatoClipboard(xmlcontext);
+    showTipModal(lang.copyplistSuccess, 'success');
 }
 
 /**
@@ -67,60 +68,60 @@ function copyPlist() {
  * @param {string} context 
  * @returns JSON Object
  */
- function formatContext(context='') {
-    context = context.replace(/[\t\r]/g,'');
+function formatContext(context = '') {
+    context = context.replace(/[\t\r]/g, '');
     const arrayContext = context.split('\n');
     let result = '';
 
-    for(let i=0,len=arrayContext.length;i<len;i++) {
+    for (let i = 0, len = arrayContext.length; i < len; i++) {
         result += arrayContext[i].trim();
     }
 
-    result = PlistParser.parse(result);
-    result = PlistParser.serialize(result);
-    
-    const fillstring = (ke,va) => {
-        if(getTypeof(va) === 'array' && va[1] === 'string') {
+    const pp = new PlistParser()
+    result = pp.parse(result)
+    result = pp.serialize(result)
+
+    const fillstring = (ke, va) => {
+        if (getTypeof(va) === 'array' && va[1] === 'string') {
             va[0] = b64Decode(va[0]);
         }
         return va;
     };
-
-    result = JSON.parse(result,fillstring);
-    bljsonobj(result);
-        
-    return result;
     
+    result = JSON.parse(result, fillstring);
+    restoreJSONKey(result);
+
+    return result;
+
 }
 
 /**
  * 遍历JSON Object 对象,把编过码的键值全部改回来
  * @param {Object} obj 
  */
-function bljsonobj(obj) {
+function restoreJSONKey(obj) {
     Object.entries(obj).forEach(([key, value]) => {
-        
+
         const tf = getTypeof(value);
 
         obj[b64Decode(key)] = value;
         obj[key] = null;
         Reflect.deleteProperty(obj, key)
-        //delete obj[key];
 
-        if(tf === 'array') {
+        if (tf === 'array') {
             const lenarr = value.length;
-            for(let it=0;it<lenarr;it++) {
-                
-                if(getTypeof(value[it]) === 'object') {
-                    bljsonobj(value[it]);
-                } 
-                
+            for (let it = 0; it < lenarr; it++) {
+
+                if (getTypeof(value[it]) === 'object') {
+                    restoreJSONKey(value[it]);
+                }
+
             }
-        } else if(tf === 'object') {
-            bljsonobj(value);
+        } else if (tf === 'object') {
+            restoreJSONKey(value);
 
         }
-        
+
     });
 }
 
@@ -162,6 +163,14 @@ onMounted(() => {
     toastr.options = {
         closeButton: true,
         positionClass: 'toast-top-center',
+    }
+
+    const lastOpenCorePlistConfig = localStorage?.lastOpenCorePlistConfig;
+    if (lastOpenCorePlistConfig) {
+        const result = formatContext(lastOpenCorePlistConfig)
+        base.updateAllSections(result)
+        helper.RefreshAllJqGridTable()
+        showTipModal(lang.loadlastplist);
     }
 })
 

@@ -10,7 +10,18 @@ import Helper from '../assets/helper'
 import { plistEncode, enabledFormat, formatInteger } from '../assets/comm'
 
 const lang = useLangStore().lang
-const title = useTipsStore()
+const yy = 'Tips_en_US'
+let title = useTipsStore()
+
+import('../stores/' + yy).then((module) => {
+    console.log('加载成功')
+    
+    title = module.useTipsStore_en_US()
+    title.ACPI.Quirks['FadtEnableReset'] = 'hhhhhhhhhh'
+    console.log((title.ACPI.Quirks['FadtEnableReset']))
+})
+
+
 const baseStore = useBaseStore()
 const table = userTableStore()
 

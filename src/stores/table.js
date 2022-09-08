@@ -22,7 +22,7 @@ export const userTableStore = defineStore('table', {
 
     getters: {
         tableWidth() {
-            return this.GLOBAL_TABLE_WIDTH;
+            return this.GLOBAL_TABLE_WIDTH
         },
 
         //返回表格的半宽
@@ -31,11 +31,14 @@ export const userTableStore = defineStore('table', {
         },
 
         tableHeight() {
-            return this.GLOBAL_TABLE_HEIGHT;
+            return this.GLOBAL_TABLE_HEIGHT
         },
 
         dataTypeList() {
-            return this.DATA_TYPE_LIST;
+            return this.DATA_TYPE_LIST
+        },
+        onEditTableList() {
+            return this.GLOBAL_SET_ONEDITTABLE
         }
     },
 
@@ -47,7 +50,7 @@ export const userTableStore = defineStore('table', {
             }
         },
         setTableWidth(tw) {
-            this.GLOBAL_TABLE_WIDTH = tw;            
+            this.GLOBAL_TABLE_WIDTH = tw       
         },
 
         addTable(tabkey,tabobj) {

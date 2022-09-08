@@ -1,7 +1,7 @@
 import { fillLangString, htmlEscape, hextoBase64, showTipModal } from './comm'
 export default class Generateplist {
     /**
-     *
+     * @param {*} table table
      * @param {*} lang lang
      * @param {*} base base
      */

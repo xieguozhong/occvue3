@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 
-export const useLangStore = defineStore({
-  id:'lang',
+export const useLangStore = defineStore('lang',{
+  //id:'lang',
   state: () => ({
     'zh-CN' : {
       down : '保存',
