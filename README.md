@@ -4,15 +4,24 @@
 
 使用：
 javascript
+
 jquery
+
 jqgrid
+
 bootstrap
+
 ace-skin
+
 vue3
+
 pinia
+
 vite
+
 pnpm
 
+vue-i18n
 
 
 编辑器: 
