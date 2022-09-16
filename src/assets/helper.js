@@ -1,17 +1,24 @@
-import { fandou, copyDatatoClipboard, showTipModal, stringToJSON, getMaxrowid, handFile } from './comm.js'
+import { fandou, copyDatatoClipboard, showTipModal, stringToJSON, getMaxrowid, handFile, getLang, getAssistObject} from './comm.js'
+
+
 export default class Helper {
     /**
      *
      * @param {*} table 表格相关数据
-     * @param {*} lang  语言相关数据
      * @param {*} base  内容相关数据
      */
-    constructor(table, lang, base, popdata) {
-        this.table = table
-        this.lang = lang
+    constructor(table, base) {
+        this.table = table        
         this.base = base
-        this.popdata = popdata
+        this.popdata = getAssistObject()
     }
+
+    static popConfig = {        
+        last_checkbox_ids: [],          //记录最后显示的是哪个多选数据
+        last_radiobox_ids: [],          //记录最后显示的是哪个多选数据
+        current_paste_tableid:''        //记录当前粘贴的表格id        
+    }
+
 
     /**
      * 刷新所有表格数据
@@ -31,8 +38,7 @@ export default class Helper {
             }
         }
     }
-
-    static current_paste_tableid = ''
+    
 
     /**
      *
@@ -198,7 +204,7 @@ export default class Helper {
                 }
             }
 
-            showTipModal(this.lang.deleterowsuccess, 'success')
+            showTipModal(getLang('lang.deleterowsuccess'), 'success')
         }
     }
 
@@ -208,7 +214,7 @@ export default class Helper {
         const selectedId = currentGridTable.jqGrid('getGridParam', 'selarrrow')
         if (selectedId.length === 0) {
             copyDatatoClipboard(' ')
-            showTipModal(this.lang.checkdatafirst, 'error')
+            showTipModal(getLang('lang.checkdatafirst'), 'error')
             return
         }
         let rowData,
@@ -232,12 +238,12 @@ export default class Helper {
 
         copyDatatoClipboard('[' + arrStrdata.join() + ']')
 
-        showTipModal(this.lang.copydatasuccess, 'success')
+        showTipModal(getLang('lang.copydatasuccess'), 'success')
     }
 
     //粘贴按钮点击事件
     imgButtonClick_btnpaste(buttonBehind) {
-        Helper.current_paste_tableid = '#gridtable_' + buttonBehind
+        Helper.popConfig.current_paste_tableid = '#gridtable_' + buttonBehind
         this.showTextareaModal()
     }
 
@@ -274,18 +280,18 @@ export default class Helper {
     pasteDataToTable() {
         this.base.textarea_content = this.base.textarea_content.trim()
         if (this.base.textarea_content === '') {
-            showTipModal(this.lang.nopasteData, 'error')
+            showTipModal(getLang('lang.nopasteData'), 'error')
             return
         }
 
         let rowData = stringToJSON(this.base.textarea_content)
 
         if (rowData === false || rowData instanceof Array === false) {
-            showTipModal(this.lang.dataFormaterror, 'error')
+            showTipModal(getLang('lang.dataFormaterror'), 'error')
             return
         }
 
-        let ids = Helper.current_paste_tableid.split('_')
+        let ids = Helper.popConfig.current_paste_tableid.split('_')
 
         let objGridTable = this.table.getTable(ids[1] + '_' + ids[2])
 
@@ -293,7 +299,7 @@ export default class Helper {
         let arrayColNames = objGridTable.jqGrid('getGridParam', 'colNames')
         for (let con in rowData[0]) {
             if (arrayColNames.indexOf(con) === -1) {
-                showTipModal(this.lang.dataFormaterror, 'error')
+                showTipModal(getLang('lang.dataFormaterror'), 'error')
                 return
             }
         }
@@ -304,7 +310,7 @@ export default class Helper {
             let leftSelectedId = leftgrid.jqGrid('getGridParam', 'selrow')
 
             if (leftSelectedId === null) {
-                showTipModal(this.lang.chooseDevices, 'warning')
+                showTipModal(getLang('lang.chooseDevices'), 'warning')
                 return
             }
 
@@ -323,23 +329,24 @@ export default class Helper {
         }
         $('#inputModal').modal('hide')
 
-        showTipModal(this.lang.pasteDataSuccess, 'success')
+        showTipModal(getLang('lang.pasteDataSuccess'), 'success')
     }
 
     // 单选按钮点击事件
     btnradioboxclick(event) {
-        this.popdata.RADIO_CHECK_BOX = 'R'
+        this.table.RADIO_CHECK_BOX = 'R'
         let buttonids = event.currentTarget.id.split('_')
-
-        if (this.popdata.last_radiobox_ids.join('_') !== event.currentTarget.id) {
-            this.popdata.pageRadio_List = this.popdata[buttonids[3] + '_List']
-            this.popdata.last_radiobox_ids = buttonids
+        
+        if (Helper.popConfig.last_radiobox_ids.join('_') !== event.currentTarget.id) {
+            
+            this.table.pageRadio_List = this.popdata[buttonids[3] + '_List']
+            Helper.popConfig.last_radiobox_ids = buttonids
         }
 
         //根据输入框中的值决定要不要勾选单选框
         let iv = this.base[buttonids[1]][buttonids[2]][buttonids[3]]
-        if (this.popdata.pageRadio_CurrentValue !== iv) {
-            this.popdata.pageRadio_CurrentValue = iv
+        if (this.table.pageRadio_CurrentValue !== iv) {
+            this.table.pageRadio_CurrentValue = iv
         }
 
         $('#divMuCheckboxPageModal').modal('show')
@@ -347,14 +354,14 @@ export default class Helper {
 
     // 弹出多选窗口按钮点击事件
     btncheckboxclick(event, vlen = 8) {
-        this.popdata.RADIO_CHECK_BOX = 'C'
+        this.table.RADIO_CHECK_BOX = 'C'
         let buttonids = event.currentTarget.id.split('_')
 
         // 1 为要显示的页面添加可选框数据列表 current_checkbox_id
-        if (this.popdata.last_checkbox_ids.join('_') !== event.currentTarget.id) {
-            this.popdata.pagePublic_List = this.popdata[buttonids[3] + '_List']
-            this.popdata.last_checkbox_ids = buttonids
-            this.popdata.pagePublic_Selected = []
+        if (Helper.popConfig.last_checkbox_ids.join('_') !== event.currentTarget.id) {
+            this.table.pagePublic_List = this.popdata[buttonids[3] + '_List']
+            Helper.popConfig.last_checkbox_ids = buttonids
+            this.table.pagePublic_Selected = []
         }
 
         // 2 获取页面上输入框中的值
@@ -362,7 +369,7 @@ export default class Helper {
 
         //如果页面输入框中的值为空，就清空已经选中的项目
         if (pageinputvalue > 0 === false) {
-            this.popdata.pagePublic_Selected = []
+            this.table.pagePublic_Selected = []
             $('#divMuCheckboxPageModal').modal('show')
             return
         }
@@ -393,14 +400,14 @@ export default class Helper {
                 e: ['2', '4', '8'], //14
                 f: ['1', '2', '4', '8'], //15
             }
-        this.popdata.pagePublic_Selected = []
+        this.table.pagePublic_Selected = []
 
         for (let i = piv16.length - 1, k = 1; i >= 0; i--, k++) {
             if (piv16[i] === '0') continue
 
             itval = ckdict[piv16[i]]
             for (let j = 0; j < itval.length; j++) {
-                this.popdata.pagePublic_Selected.push('0x' + '0'.repeat(vlen - k) + itval[j] + '0'.repeat(k - 1))
+                this.table.pagePublic_Selected.push('0x' + '0'.repeat(vlen - k) + itval[j] + '0'.repeat(k - 1))
             }
         }
 
@@ -409,11 +416,11 @@ export default class Helper {
 
     //勾选页面点击确定按钮事件
     checkboxPageBtnOKclick() {
-        if (this.popdata.RADIO_CHECK_BOX === 'C') {
-            this.base[this.popdata.last_checkbox_ids[1]][this.popdata.last_checkbox_ids[2]][this.popdata.last_checkbox_ids[3]] = this.getCheckedTotal()
-        } else if (this.popdata.RADIO_CHECK_BOX === 'R') {
-            this.base[this.popdata.last_radiobox_ids[1]][this.popdata.last_radiobox_ids[2]][this.popdata.last_radiobox_ids[3]] =
-                this.popdata.pageRadio_CurrentValue
+        if (this.table.RADIO_CHECK_BOX === 'C') {
+            this.base[Helper.popConfig.last_checkbox_ids[1]][Helper.popConfig.last_checkbox_ids[2]][Helper.popConfig.last_checkbox_ids[3]] = this.getCheckedTotal()
+        } else if (this.table.RADIO_CHECK_BOX === 'R') {
+            this.base[Helper.popConfig.last_radiobox_ids[1]][Helper.popConfig.last_radiobox_ids[2]][Helper.popConfig.last_radiobox_ids[3]] =
+                this.table.pageRadio_CurrentValue
         }
 
         $('#divMuCheckboxPageModal').modal('hide')
@@ -422,9 +429,9 @@ export default class Helper {
     //获取勾选项的合计值，以10进制返回
     getCheckedTotal() {
         let pagetotal = 0
-        for (let i = 0, len = this.popdata.pagePublic_Selected.length; i < len; i++) {
+        for (let i = 0, len = this.table.pagePublic_Selected.length; i < len; i++) {
             //consolelog(checklist[i]);
-            pagetotal += parseInt(this.popdata.pagePublic_Selected[i], 16)
+            pagetotal += parseInt(this.table.pagePublic_Selected[i], 16)
         }
         //consolelog('勾选值=' + pagetotal);
         return pagetotal

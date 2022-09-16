@@ -2,27 +2,22 @@
 <script setup>
 import { useBaseStore } from '../stores/index'
 import { userTableStore } from '../stores/table'
-import { useTipsStore } from '../stores/Tips_zh-CN'
-import { useLangStore } from '../stores/lang'
-import { usepopdataStore } from '../stores/popdata'
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import Helper from '../assets/helper'
-import  {plistEncode,enabledFormat,formatInteger,getPlistEncodeFunction}  from '../assets/comm'
+import { plistEncode, enabledFormat, formatInteger, getPlistEncodeFunction } from '../assets/comm'
 
-const lang = useLangStore().lang
-const title = useTipsStore()
 const baseStore = useBaseStore()
 const table = userTableStore()
-const popdata = usepopdataStore()
-const helper = new Helper(table, lang, baseStore, popdata)
+
+const helper = new Helper(table, baseStore)
 
 const { Kernel } = storeToRefs(baseStore)
 
 table.setTableHeight()
 
-const divHeightStyle = {height: parseInt(table.tableHeight*0.5)+1 + 'px'}
+const divHeightStyle = { height: parseInt(table.tableHeight * 0.5) + 1 + 'px' }
 
 onMounted(() => {
   initGridTableKernel()
@@ -140,7 +135,7 @@ function initGridTableKernel() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Kernel_Add'"><img
-                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -150,7 +145,7 @@ function initGridTableKernel() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Kernel_Block'"><img
-                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -161,33 +156,34 @@ function initGridTableKernel() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Kernel_Patch'"><img
-                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
               </template>
             </span>
           </div>
 
-          <div id="tabbable_Kernel_Emulate" class="tab-pane fade in" style="padding-bottom: 5px;" :style="divHeightStyle">
+          <div id="tabbable_Kernel_Emulate" class="tab-pane fade in" style="padding-bottom: 5px;"
+            :style="divHeightStyle">
 
             <div class="well">
               <div class="row">
-                <div class="col-xs-3 mintip" :title="title.Kernel.Emulate.Cpuid1Data">
+                <div class="col-xs-3 mintip" :title="$t('title.Kernel.Emulate.Cpuid1Data')">
                   Cpuid1Data<input type="text" class="form-control" v-model="Kernel.Emulate.Cpuid1Data" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Kernel.Emulate.Cpuid1Mask">
+                <div class="col-xs-3 mintip" :title="$t('title.Kernel.Emulate.Cpuid1Mask')">
                   Cpuid1Mask<input type="text" class="form-control" v-model="Kernel.Emulate.Cpuid1Mask" />
                 </div>
 
-                <div class="col-xs-3 mintip" :title="title.Kernel.Emulate.MaxKernel">
+                <div class="col-xs-3 mintip" :title="$t('title.Kernel.Emulate.MaxKernel')">
                   MaxKernel<input type="text" class="form-control" v-model="Kernel.Emulate.MaxKernel" />
                 </div>
 
-                <div class="col-xs-3 mintip" :title="title.Kernel.Emulate.MinKernel">
+                <div class="col-xs-3 mintip" :title="$t('title.Kernel.Emulate.MinKernel')">
                   MinKernel<input type="text" class="form-control" v-model="Kernel.Emulate.MinKernel" />
                 </div>
               </div>
 
               <div class="checkbox" style="margin-top: 20px">
-                <label class="mintip" :title="title.Kernel.Emulate.DummyPowerManagement">
+                <label class="mintip" :title="$t('title.Kernel.Emulate.DummyPowerManagement')">
                   <input type="checkbox" class="ace" v-model="Kernel.Emulate.DummyPowerManagement" />
                   <span class="lbl"> DummyPowerManagement</span>
                 </label>
@@ -200,18 +196,19 @@ function initGridTableKernel() {
 
           </div>
 
-          <div id="tabbable_Kernel_Scheme" class="tab-pane fade in" style="padding-bottom: 5px;" :style="divHeightStyle">
+          <div id="tabbable_Kernel_Scheme" class="tab-pane fade in" style="padding-bottom: 5px;"
+            :style="divHeightStyle">
 
             <div class="well">
               <div class="row">
-                <div class="col-xs-3 mintip" :title="title.Kernel.Scheme.KernelArch">
+                <div class="col-xs-3 mintip" :title="$t('title.Kernel.Scheme.KernelArch')">
                   KernelArch<a id="btnradiobox_Kernel_Scheme_KernelArch" style="text-decoration:none"
                     v-on:click="helper.btnradioboxclick($event)">&nbsp;
                     <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="Kernel.Scheme.KernelArch" />
 
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Kernel.Scheme.KernelCache">
+                <div class="col-xs-3 mintip" :title="$t('title.Kernel.Scheme.KernelCache')">
                   KernelCache<a id="btnradiobox_Kernel_Scheme_KernelCache" style="text-decoration:none"
                     v-on:click="helper.btnradioboxclick($event)">&nbsp;
                     <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
@@ -223,12 +220,12 @@ function initGridTableKernel() {
               </div>
 
               <div class="checkbox" style="margin-top: 20px">
-                <label class="mintip" :title="title.Kernel.Scheme.CustomKernel">
+                <label class="mintip" :title="$t('title.Kernel.Scheme.CustomKernel')">
                   <input type="checkbox" class="ace" v-model="Kernel.Scheme.CustomKernel" />
                   <span class="lbl"> CustomKernel</span>
                 </label>
 
-                <label class="mintip" :title="title.Kernel.Scheme.FuzzyMatch">
+                <label class="mintip" :title="$t('title.Kernel.Scheme.FuzzyMatch')">
                   <input type="checkbox" class="ace" v-model="Kernel.Scheme.FuzzyMatch" />
                   <span class="lbl"> FuzzyMatch</span>
                 </label>
@@ -246,7 +243,7 @@ function initGridTableKernel() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Kernel_Force'"><img
-                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -257,25 +254,25 @@ function initGridTableKernel() {
 
 
 
-        <h3 class="header smaller lighter blue"> Quirks</h3>
-        <div class="well">
-          <div class="row">
-            <div class="col-xs-3 mintip" :title="title.Kernel.Quirks.SetApfsTrimTimeout">
-              SetApfsTrimTimeout<input type="text" class="form-control" v-model="Kernel.Quirks.SetApfsTrimTimeout" />
-            </div>
-
+      <h3 class="header smaller lighter blue"> Quirks</h3>
+      <div class="well">
+        <div class="row">
+          <div class="col-xs-3 mintip" :title="$t('title.Kernel.Quirks.SetApfsTrimTimeout')">
+            SetApfsTrimTimeout<input type="text" class="form-control" v-model="Kernel.Quirks.SetApfsTrimTimeout" />
           </div>
 
-          <div class="checkbox">
-            <template v-for="(item, index) in Kernel.Quirks" :key="index">
-              <label v-if="typeof (item) === 'boolean'" class="mintip" :title="title.Kernel.Quirks[index]">
-                <input type="checkbox" class="ace" v-model="Kernel.Quirks[index]" />
-                <span class="lbl"> {{ index }}</span>
-              </label>
-            </template>
-
-          </div>
         </div>
+
+        <div class="checkbox">
+          <template v-for="(item, index) in Kernel.Quirks" :key="index">
+            <label v-if="typeof (item) === 'boolean'" class="mintip" :title="$t('title.Kernel.Quirks.' + index)">
+              <input type="checkbox" class="ace" v-model="Kernel.Quirks[index]" />
+              <span class="lbl"> {{ index }}</span>
+            </label>
+          </template>
+
+        </div>
+      </div>
 
 
     </div>

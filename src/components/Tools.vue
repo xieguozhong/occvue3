@@ -1,21 +1,24 @@
 <script setup>
 import { useBaseStore } from '../stores/index'
-import { useLangStore } from '../stores/lang'
-import { useTipsStore } from '../stores/Tips_zh-CN'
+
 import { userTableStore } from '../stores/table'
 import Helper from '../assets/helper'
 import Generateplist from '../assets/generateplist'
-import  PlistParser  from '../assets/plistparser'
-import { getTypeof, b64Decode, fillLangString, copyDatatoClipboard, showTipModal } from '../assets/comm'
-
+import PlistParser from '../assets/plistparser'
+import { getTypeof, b64Decode, copyDatatoClipboard, showTipModal } from '../assets/comm'
 
 import { onMounted, watch } from 'vue'
 
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
+
 const base = useBaseStore()
-const title = useTipsStore()
+
 const table = userTableStore()
-const lang = useLangStore().lang
-const helper = new Helper(table, title, base)
+
+const helper = new Helper(table, base)
 
 
 //查看有没有表格在被编辑中
@@ -33,7 +36,7 @@ function checkOneditTable() {
     }
 
     let newmsg = '-'.repeat(30) + '<br>' + Array.from(newset).join('<br>') + '<br>' + '-'.repeat(30);
-    return fillLangString(lang.editingtablemessage, newmsg);
+    return t('lang.editingtablemessage', [newmsg]);
 }
 
 //保存按钮
@@ -43,11 +46,11 @@ function savePlist() {
         toastr.error(cotstring);
         return;
     }
-    const genplist = new Generateplist(table, lang, base)
+    const genplist = new Generateplist(table, base)
     let xmlcontext = genplist.getAllPlist();
     let blob = new Blob([xmlcontext], { type: "text/plain;charset=utf-8" });
     saveAs(blob, "config.plist");
-    showTipModal(lang.downplistSuccess, 'success');
+    showTipModal(t('lang.downplistSuccess'), 'success');
 }
 
 //复制按钮
@@ -57,10 +60,10 @@ function copyPlist() {
         toastr.error(cotstring);
         return;
     }
-    const genplist = new Generateplist(table, lang, base)
+    const genplist = new Generateplist(table, base)
     let xmlcontext = genplist.getAllPlist();
     copyDatatoClipboard(xmlcontext);
-    showTipModal(lang.copyplistSuccess, 'success');
+    showTipModal(t('lang.copyplistSuccess'), 'success');
 }
 
 /**
@@ -87,7 +90,7 @@ function formatContext(context = '') {
         }
         return va;
     };
-    
+
     result = JSON.parse(result, fillstring);
     restoreJSONKey(result);
 
@@ -129,9 +132,9 @@ function restoreJSONKey(obj) {
 onMounted(() => {
     $('#id-input-file-2')
         .ace_file_input({
-            no_file: lang.no_file,
-            btn_choose: lang.choose,
-            btn_change: lang.change,
+            no_file: t('lang.no_file'),
+            btn_choose: t('lang.choose'),
+            btn_change: t('lang.change'),
             droppable: false,
             onchange: null,
             allowExt: ['plist'],
@@ -150,7 +153,7 @@ onMounted(() => {
             },
         })
         .on('file.error.ace', function () {
-            showTipModal(lang.alertfileerror, 'error')
+            showTipModal(t('lang.alertfileerror'), 'error')
         })
 
     //页面加载完成后解除文件选择框的禁用属性
@@ -165,13 +168,13 @@ onMounted(() => {
         positionClass: 'toast-top-center',
     }
 
-    const lastOpenCorePlistConfig = localStorage?.lastOpenCorePlistConfig;
-    if (lastOpenCorePlistConfig) {
-        const result = formatContext(lastOpenCorePlistConfig)
-        base.updateAllSections(result)
-        helper.RefreshAllJqGridTable()
-        showTipModal(lang.loadlastplist);
-    }
+    // const lastOpenCorePlistConfig = localStorage?.lastOpenCorePlistConfig;
+    // if (lastOpenCorePlistConfig) {
+    //     const result = formatContext(lastOpenCorePlistConfig)
+    //     base.updateAllSections(result)
+    //     helper.RefreshAllJqGridTable()
+    //     showTipModal(lang.loadlastplist);
+    // }
 })
 
 
@@ -201,13 +204,13 @@ watch(() => base.configisfull, (newval, oldval) => {
         </div>
         <!-- /.nav-search -->
         <div class="pull-right">
-            <button class="btn btn-minier btn-success" @click="savePlist">{{ lang.down }}</button>&nbsp;
-            <button class="btn btn-minier btn-success" @click="copyPlist">{{ lang.copy }}</button>
-            <label class="mintip" :title="title.PlatformInfo.configisfull" style="margin-left: 10px">
+            <button class="btn btn-minier btn-success" @click="savePlist">{{ $t('lang.down') }}</button>&nbsp;
+            <button class="btn btn-minier btn-success" @click="copyPlist">{{ $t('lang.copy') }}</button>
+            <label class="mintip" :title="$t('title.PlatformInfo.configisfull')" style="margin-left: 10px">
                 <input v-model="base.configisfull" type="checkbox" class="ace" />
                 <span class="lbl"> Custom</span>
             </label>
-            <label class="mintip" :title="title.PlatformInfo.configisMOD" style="margin-left: 10px">
+            <label class="mintip" :title="$t('title.PlatformInfo.configisMOD')" style="margin-left: 10px">
                 <input v-model="base.configisMOD" type="checkbox" class="ace" />
                 <span class="lbl"> MOD</span>
             </label>

@@ -1,3 +1,24 @@
+import i18n from "@/i18n/index"
+
+/**
+ * 获取本地语言
+ * @param {String} msgkey 
+ * @param {Array} arrval 
+ * @returns 
+ */
+export function getLang(msgkey, arrval) {
+    //return Array.isArray(arrval) ? i18n.global.t(msg, arrval) : i18n.global.t(msg);
+    return i18n.global.t(msgkey, arrval);
+}
+
+/**
+ * 获取本地语言版Asset对象
+ * @returns 
+ */
+export function getAssistObject() {
+    return i18n.global.tm('assist');
+}
+
 //防抖函数处理
 export function fandou(fn, times = 100) {
     let timeouter = null
@@ -8,6 +29,23 @@ export function fandou(fn, times = 100) {
         }, times)
     }
 }
+
+/**
+     * 1 检测num变量是否为数值
+     * 2 如果不是弹出提示信息,返回0
+     * 3 如果是根据第二个参数转换后返回, 默认为parseInt函数
+     * @param {String} num
+     * @param {Function} fnparse
+     * @returns Number
+     */
+ export function toNumber(num, fnparse = parseInt) {
+    if (isNaN(num)) {
+        showTipModal(getLang('lang.toNumberError', [num]), 'warning')
+        return 0
+    }
+    return fnparse(num)
+}
+
 
 export function getPlistRealData(arrData, defaultVal = '') {
     if (arrData === undefined) return defaultVal;
@@ -191,10 +229,7 @@ export function formatInteger(cellvalue = 0) {
     }
 
     if (isNaN(cellvalue)) {
-        let warningmsg = fillLangString('The data in the plastic format was incorrectly entered in the string "{@1}", which may cause the configuration file to be wrong. Please check it', cellvalue);
-
-        warningmsg += fillLangString(' (整形格式的数据被错误的输入了字符串"{@1}", 可能导致配置文件错误, 请检查)', cellvalue)
-        showTipModal(warningmsg, 'warning');
+        showTipModal(getLang('lang.toNumberError',[cellvalue]), 'warning');
         return 0;
     }
     return parseInt(cellvalue);
@@ -366,10 +401,7 @@ export function hextoBase64(strhex) {
 
     strhex = strhex.replace(/\s+/g, "");
     if (strhex.length % 2) {
-        let errormsg = 'Error, ' + fillLangString('<{@1}> is not a valid hexadecimal string, because the length of a hexadecimal string cannot be odd', strhex)
-        errormsg += fillLangString(' (<{@1}>不是有效的十六进制字符串, 因为十六进制字符串的长度不能为奇数)', strhex)
-
-        showTipModal(errormsg, 'error');
+        showTipModal(getLang('lang.hexstringlengthisodd',[strhex]), 'error');
         return '';
     }
     const binary = new Array();
@@ -446,17 +478,6 @@ export function showTipModal(content, msgtype = 'success') {
     return ids.length === 0 ? 0 : Math.max(...ids);
 }
 
-/**
- * fillLangString('my {@1} is {@2}', 'name', 'mady')
- * @param  {...String} args 
- * @returns String
- */
- export function fillLangString(...args) {    
-	for(let i=1,len=args.length;i<len;i++) {      
-		args[0] = args[0].replace('{@' + i + '}', args[i]);
-	}  
-	return args[0];
-}
 
 //用JSzip处理kext中Plugin中的文件,单独处理Kernel_Add处添加文件
 export function handFile(ff, thetable) {

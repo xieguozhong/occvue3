@@ -1,22 +1,19 @@
 <script setup>
 import { useBaseStore } from '../stores/index'
 import { userTableStore } from '../stores/table'
-import { useTipsStore } from '../stores/Tips_zh-CN'
-import { useLangStore } from '../stores/lang'
-import { usepopdataStore } from '../stores/popdata'
+
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import Helper from '../assets/helper'
-import { plistEncode, enabledFormat, formatInteger, getPlistEncodeFunction } from '../assets/comm'
+import { plistEncode, enabledFormat, getPlistEncodeFunction } from '../assets/comm'
 
-const lang = useLangStore().lang
-const title = useTipsStore()
+
 const baseStore = useBaseStore()
 const table = userTableStore()
-const popdata = usepopdataStore()
 
-const helper = new Helper(table, lang, baseStore, popdata)
+
+const helper = new Helper(table, baseStore)
 
 const { Misc } = storeToRefs(baseStore)
 
@@ -56,7 +53,7 @@ function initGridTableMisc() {
 
 
   //Tools
-  colNames = ['Arguments', 'Comment', 'Name', 'Flavour', 'Path', 'FullNvramAccess','Auxiliary', 'RealPath', 'TextMode', 'Enabled'];
+  colNames = ['Arguments', 'Comment', 'Name', 'Flavour', 'Path', 'FullNvramAccess', 'Auxiliary', 'RealPath', 'TextMode', 'Enabled'];
   colModel = [
     { name: 'Arguments', index: 'Arguments', width: 150, editable: true, sortable: false, formatter: plistEncode },
     { name: 'Comment', index: 'Comment', width: 150, editable: true, sortable: false, formatter: plistEncode },
@@ -77,7 +74,7 @@ function initGridTableMisc() {
 </script>
 
 
-  <template>
+<template>
   <div class="row">
 
     <div class="col-xs-12">
@@ -101,7 +98,7 @@ function initGridTableMisc() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Misc_BlessOverride'"><img
-                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -111,7 +108,7 @@ function initGridTableMisc() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Misc_Entries'"><img
-                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -120,7 +117,7 @@ function initGridTableMisc() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Misc_Tools'"><img
-                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -129,74 +126,74 @@ function initGridTableMisc() {
 
               <div class="row">
 
-                <div class="col-xs-3 mintip" :title="title.Misc.Boot.HibernateMode">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Boot.HibernateMode')">
                   HibernateMode<a id="btnradiobox_Misc_Boot_HibernateMode" style="text-decoration:none"
                     v-on:click="helper.btnradioboxclick($event)">&nbsp;
                     <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="Misc.Boot.HibernateMode" />
                 </div>
 
-                <div class="col-xs-3 mintip" :title="title.Misc.Boot.PickerMode">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Boot.PickerMode')">
                   PickerMode<a id="btnradiobox_Misc_Boot_PickerMode" style="text-decoration:none"
                     v-on:click="helper.btnradioboxclick($event)">&nbsp;
                     <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="Misc.Boot.PickerMode" />
                 </div>
 
-                <div class="col-xs-3 mintip" :title="title.Misc.Boot.PickerVariant">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Boot.PickerVariant')">
                   PickerVariant<a id="btnradiobox_Misc_Boot_PickerVariant" style="text-decoration:none"
                     v-on:click="helper.btnradioboxclick($event)">&nbsp;
                     <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="Misc.Boot.PickerVariant" />
                 </div>
 
-                <div class="col-xs-3 mintip" :title="title.Misc.Boot.TakeoffDelay">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Boot.TakeoffDelay')">
                   TakeoffDelay<input type="text" class="form-control" v-model="Misc.Boot.TakeoffDelay" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Boot.Timeout">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Boot.Timeout')">
                   Timeout<input type="text" class="form-control" v-model="Misc.Boot.Timeout" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Boot.ConsoleAttributes">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Boot.ConsoleAttributes')">
                   ConsoleAttributes<input type="text" class="form-control" v-model="Misc.Boot.ConsoleAttributes" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Boot.PickerAttributes">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Boot.PickerAttributes')">
                   PickerAttributes<a id="btncheckbox_Misc_Boot_PickerAttributes" style="text-decoration:none"
                     v-on:click="helper.btncheckboxclick($event, 4)">&nbsp;
                     <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="Misc.Boot.PickerAttributes" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Boot.LauncherOption">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Boot.LauncherOption')">
                   LauncherOption<a id="btnradiobox_Misc_Boot_LauncherOption" style="text-decoration:none"
                     v-on:click="helper.btnradioboxclick($event)">&nbsp;
                     <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="Misc.Boot.LauncherOption" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Boot.LauncherPath">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Boot.LauncherPath')">
                   LauncherPath<input type="text" class="form-control" v-model="Misc.Boot.LauncherPath" />
                 </div>
 
               </div>
 
               <div class="checkbox" style="margin-top: 20px ">
-                <label class="mintip" :title="title.Misc.Boot.HideAuxiliary">
+                <label class="mintip" :title="$t('title.Misc.Boot.HideAuxiliary')">
                   <input type="checkbox" class="ace" v-model="Misc.Boot.HideAuxiliary" />
                   <span class="lbl"> HideAuxiliary</span>
                 </label>
 
-                <label class="mintip" :title="title.Misc.Boot.PickerAudioAssist">
+                <label class="mintip" :title="$t('title.Misc.Boot.PickerAudioAssist')">
                   <input type="checkbox" class="ace" v-model="Misc.Boot.PickerAudioAssist" />
                   <span class="lbl"> PickerAudioAssist</span>
                 </label>
-                <label class="mintip" style="margin-left: 5px;" :title="title.Misc.Boot.PollAppleHotKeys">
+                <label class="mintip" style="margin-left: 5px;" :title="$t('title.Misc.Boot.PollAppleHotKeys')">
                   <input type="checkbox" class="ace" v-model="Misc.Boot.PollAppleHotKeys" />
                   <span class="lbl"> PollAppleHotKeys</span>
                 </label>
-                <label class="mintip" style="margin-left: 5px;" :title="title.Misc.Boot.ShowPicker">
+                <label class="mintip" style="margin-left: 5px;" :title="$t('title.Misc.Boot.ShowPicker')">
                   <input type="checkbox" class="ace" v-model="Misc.Boot.ShowPicker" />
                   <span class="lbl"> ShowPicker</span>
                 </label>
                 <label v-show="baseStore.configisMOD === true" class="mintip"
-                  :title="title.Misc.Boot.SkipCustomEntryCheck">
+                  :title="$t('title.Misc.Boot.SkipCustomEntryCheck')">
                   <input type="checkbox" class="ace" v-model="Misc.Boot.SkipCustomEntryCheck" />
                   <span class="lbl"> SkipCustomEntryCheck</span>
                 </label>
@@ -208,19 +205,19 @@ function initGridTableMisc() {
             <div class="well">
 
               <div class="row">
-                <div class="col-xs-3 mintip" :title="title.Misc.Debug.DisplayDelay">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Debug.DisplayDelay')">
                   DisplayDelay<input type="text" class="form-control" v-model="Misc.Debug.DisplayDelay" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Debug.DisplayLevel">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Debug.DisplayLevel')">
                   DisplayLevel<a id="btncheckbox_Misc_Debug_DisplayLevel" style="text-decoration:none"
                     v-on:click="helper.btncheckboxclick($event)">&nbsp;
                     <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="Misc.Debug.DisplayLevel" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Debug.LogModules">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Debug.LogModules')">
                   LogModules<input type="text" class="form-control" v-model="Misc.Debug.LogModules" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Debug.Target">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Debug.Target')">
                   Target<a id="btncheckbox_Misc_Debug_Target" style="text-decoration:none"
                     v-on:click="helper.btncheckboxclick($event, 2)">&nbsp;
                     <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
@@ -229,25 +226,25 @@ function initGridTableMisc() {
               </div>
 
               <div class="checkbox" style="margin-top: 20px ">
-                <label class="mintip" :title="title.Misc.Debug.AppleDebug">
+                <label class="mintip" :title="$t('title.Misc.Debug.AppleDebug')">
                   <input type="checkbox" class="ace" v-model="Misc.Debug.AppleDebug" />
                   <span class="lbl"> AppleDebug</span>
                 </label>
 
-                <label class="mintip" :title="title.Misc.Debug.ApplePanic">
+                <label class="mintip" :title="$t('title.Misc.Debug.ApplePanic')">
                   <input type="checkbox" class="ace" v-model="Misc.Debug.ApplePanic" />
                   <span class="lbl"> ApplePanic</span>
                 </label>
 
 
-                <label class="mintip" :title="title.Misc.Debug.DisableWatchDog">
+                <label class="mintip" :title="$t('title.Misc.Debug.DisableWatchDog')">
                   <input type="checkbox" class="ace" v-model="Misc.Debug.DisableWatchDog" />
                   <span class="lbl"> DisableWatchDog</span>
                 </label>
 
 
 
-                <label class="mintip" :title="title.Misc.Debug.SysReport">
+                <label class="mintip" :title="$t('title.Misc.Debug.SysReport')">
                   <input type="checkbox" class="ace" v-model="Misc.Debug.SysReport" />
                   <span class="lbl"> SysReport</span>
                 </label>
@@ -259,28 +256,28 @@ function initGridTableMisc() {
             <div class="well">
 
               <div class="row">
-                <div class="col-xs-3 mintip" :title="title.Misc.Security.ExposeSensitiveData">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Security.ExposeSensitiveData')">
                   ExposeSensitiveData<a id="btncheckbox_Misc_Security_ExposeSensitiveData" style="text-decoration:none"
                     v-on:click="helper.btncheckboxclick($event, 2)">&nbsp;
                     <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="Misc.Security.ExposeSensitiveData" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Security.ApECID">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Security.ApECID')">
                   ApECID<input type="text" class="form-control" v-model="Misc.Security.ApECID" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Security.HaltLevel">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Security.HaltLevel')">
                   HaltLevel<input type="text" class="form-control" v-model="Misc.Security.HaltLevel" />
                 </div>
 
 
-                <div class="col-xs-3 mintip" :title="title.Misc.Security.Vault">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Security.Vault')">
                   Vault<a id="btnradiobox_Misc_Security_Vault" style="text-decoration:none"
                     v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
                       class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="Misc.Security.Vault">
                 </div>
 
-                <div class="col-xs-3 mintip" :title="title.Misc.Security.ScanPolicy">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Security.ScanPolicy')">
                   ScanPolicy<a id="btncheckbox_Misc_Security_ScanPolicy" style="text-decoration:none"
                     v-on:click="helper.btncheckboxclick($event)">&nbsp;
                     <img :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;
@@ -288,7 +285,7 @@ function initGridTableMisc() {
                 </div>
 
 
-                <div class="col-xs-3 mintip" :title="title.Misc.Security.DmgLoading">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Security.DmgLoading')">
                   DmgLoading<a id="btnradiobox_Misc_Security_DmgLoading" style="text-decoration:none"
                     v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
                       class="ctrlicon"></a>&nbsp;
@@ -296,16 +293,16 @@ function initGridTableMisc() {
                 </div>
 
 
-                <div class="col-xs-3 mintip" :title="title.Misc.Security.SecureBootModel">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Security.SecureBootModel')">
                   SecureBootModel<a id="btnradiobox_Misc_Security_SecureBootModel" style="text-decoration:none"
                     v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
                       class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="Misc.Security.SecureBootModel">
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Security.PasswordHash">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Security.PasswordHash')">
                   PasswordHash<input type="text" class="form-control" v-model="Misc.Security.PasswordHash" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Security.PasswordSalt">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Security.PasswordSalt')">
                   PasswordSalt<input type="text" class="form-control" v-model="Misc.Security.PasswordSalt" />
                 </div>
 
@@ -313,20 +310,20 @@ function initGridTableMisc() {
 
               <div class="checkbox" style="margin-top: 20px">
 
-                <label class="mintip" :title="title.Misc.Security.AllowSetDefault">
+                <label class="mintip" :title="$t('title.Misc.Security.AllowSetDefault')">
                   <input type="checkbox" class="ace" v-model="Misc.Security.AllowSetDefault" />
                   <span class="lbl"> AllowSetDefault</span>
                 </label>
 
-                <label class="mintip" :title="title.Misc.Security.AuthRestart">
+                <label class="mintip" :title="$t('title.Misc.Security.AuthRestart')">
                   <input type="checkbox" class="ace" v-model="Misc.Security.AuthRestart" />
                   <span class="lbl"> AuthRestart</span>
                 </label>
-                <label class="mintip" :title="title.Misc.Security.BlacklistAppleUpdate">
+                <label class="mintip" :title="$t('title.Misc.Security.BlacklistAppleUpdate')">
                   <input type="checkbox" class="ace" v-model="Misc.Security.BlacklistAppleUpdate" />
                   <span class="lbl"> BlacklistAppleUpdate</span>
                 </label>
-                <label class="mintip" :title="title.Misc.Security.EnablePassword">
+                <label class="mintip" :title="$t('title.Misc.Security.EnablePassword')">
                   <input type="checkbox" class="ace" v-model="Misc.Security.EnablePassword" />
                   <span class="lbl"> EnablePassword</span>
                 </label>
@@ -340,56 +337,56 @@ function initGridTableMisc() {
             <div class="well">
 
               <div class="checkbox" style="margin-top: 20px ">
-                <label class="mintip" :title="title.Misc.Serial.Init">
+                <label class="mintip" :title="$t('title.Misc.Serial.Init')">
                   <input type="checkbox" class="ace" v-model="Misc.Serial.Init" />
                   <span class="lbl"> Init</span>
                 </label>
 
-                <label class="mintip" :title="title.Misc.Serial.Override">
+                <label class="mintip" :title="$t('title.Misc.Serial.Override')">
                   <input type="checkbox" class="ace" v-model="Misc.Serial.Override" />
                   <span class="lbl"> Override</span>
                 </label>
               </div>
 
               <div class="row" v-show="Misc.Serial.Override === true">
-                <div class="col-xs-3 mintip" :title="title.Misc.Serial.Custom.BaudRate">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Serial.Custom.BaudRate')">
                   BaudRate<input type="text" class="form-control" v-model="Misc.Serial.Custom.BaudRate" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Serial.Custom.ClockRate">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Serial.Custom.ClockRate')">
                   ClockRate<input type="text" class="form-control" v-model="Misc.Serial.Custom.ClockRate" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Serial.Custom.ExtendedTxFifoSize">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Serial.Custom.ExtendedTxFifoSize')">
                   ExtendedTxFifoSize<input type="text" class="form-control"
                     v-model="Misc.Serial.Custom.ExtendedTxFifoSize" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Serial.Custom.FifoControl">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Serial.Custom.FifoControl')">
                   FifoControl<input type="text" class="form-control" v-model="Misc.Serial.Custom.FifoControl" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Serial.Custom.LineControl">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Serial.Custom.LineControl')">
                   LineControl<input type="text" class="form-control" v-model="Misc.Serial.Custom.LineControl" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Serial.Custom.PciDeviceInfo">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Serial.Custom.PciDeviceInfo')">
                   PciDeviceInfo<input type="text" class="form-control" v-model="Misc.Serial.Custom.PciDeviceInfo" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Serial.Custom.RegisterAccessWidth">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Serial.Custom.RegisterAccessWidth')">
                   RegisterAccessWidth<input type="text" class="form-control"
                     v-model="Misc.Serial.Custom.RegisterAccessWidth" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Serial.Custom.RegisterBase">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Serial.Custom.RegisterBase')">
                   RegisterBase<input type="text" class="form-control" v-model="Misc.Serial.Custom.RegisterBase" />
                 </div>
-                <div class="col-xs-3 mintip" :title="title.Misc.Serial.Custom.RegisterStride">
+                <div class="col-xs-3 mintip" :title="$t('title.Misc.Serial.Custom.RegisterStride')">
                   RegisterStride<input type="text" class="form-control" v-model="Misc.Serial.Custom.RegisterStride" />
                 </div>
 
               </div>
 
               <div class="checkbox" style="margin-top: 20px " v-show="Misc.Serial.Override === true">
-                <label class="mintip" :title="title.Misc.Serial.Custom.UseHardwareFlowControl">
+                <label class="mintip" :title="$t('title.Misc.Serial.Custom.UseHardwareFlowControl')">
                   <input type="checkbox" class="ace" v-model="Misc.Serial.Custom.UseHardwareFlowControl" />
                   <span class="lbl"> UseHardwareFlowControl</span>
                 </label>
-                <label class="mintip" :title="title.Misc.Serial.Custom.UseMmio">
+                <label class="mintip" :title="$t('title.Misc.Serial.Custom.UseMmio')">
                   <input type="checkbox" class="ace" v-model="Misc.Serial.Custom.UseMmio" />
                   <span class="lbl"> UseMmio</span>
                 </label>

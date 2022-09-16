@@ -1,20 +1,17 @@
 <script setup>
 import { useBaseStore } from '../stores/index'
 import { userTableStore } from '../stores/table'
-import { useTipsStore } from '../stores/Tips_zh-CN'
-import { useLangStore } from '../stores/lang'
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import Helper from '../assets/helper'
 import { plistEncode, enabledFormat, formatInteger, getPlistEncodeFunction } from '../assets/comm'
 
-const lang = useLangStore().lang
-const title = useTipsStore()
+
 const baseStore = useBaseStore()
 const table = userTableStore()
 
-const helper = new Helper(table, lang, baseStore)
+const helper = new Helper(table, baseStore)
 
 const { Booter } = storeToRefs(baseStore)
 
@@ -81,7 +78,7 @@ function initGridTableBooter() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Booter_Patch'"><img
-                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -91,7 +88,7 @@ function initGridTableBooter() {
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_Booter_MmioWhitelist'"><img
-                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
               </template>
             </span>
           </div>
@@ -104,7 +101,7 @@ function initGridTableBooter() {
       <div class="well">
         <div class="row">
           <template v-for="(item, index) in Booter.Quirks" :key="index">
-            <div v-if="typeof (item) === 'number'" class="col-xs-3 mintip" :title="title.Booter.Quirks[index]">
+            <div v-if="typeof (item) === 'number'" class="col-xs-3 mintip" :title="$t('title.Booter.Quirks.' + index)">
               {{ index }}<input type="text" class="form-control" v-model="Booter.Quirks[index]">
             </div>
           </template>
@@ -114,12 +111,12 @@ function initGridTableBooter() {
         <div class="checkbox">
           <template v-for="(item, index) in Booter.Quirks" :key="index">
             <label v-if="typeof (item) === 'boolean' && index !== 'EnableForAll'" class="mintip"
-              :title="title.Booter.Quirks[index]">
+              :title="$t('title.Booter.Quirks.' + index)">
               <input type="checkbox" class="ace" v-model="Booter.Quirks[index]" />
               <span class="lbl"> {{ index }}</span>
             </label>
           </template>
-          <label v-show="baseStore.configisMOD === true" class="mintip" :title="title.Booter.Quirks.EnableForAll">
+          <label v-show="baseStore.configisMOD === true" class="mintip" :title="$t('title.Booter.Quirks.EnableForAll')">
             <input type="checkbox" class="ace" v-model="Booter.Quirks.EnableForAll" />
             <span class="lbl"> EnableForAll</span>
           </label>

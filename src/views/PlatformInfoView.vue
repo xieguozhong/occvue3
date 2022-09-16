@@ -1,28 +1,23 @@
 <script setup>
 import { useBaseStore } from '../stores/index'
 import { userTableStore } from '../stores/table'
-import { useTipsStore } from '../stores/Tips_zh-CN'
-import { useLangStore } from '../stores/lang'
-import { usepopdataStore } from '../stores/popdata'
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import Helper from '../assets/helper'
-import { getUUID, plistEncode, enabledFormat, formatInteger } from '../assets/comm'
+import { getUUID, plistEncode, formatInteger } from '../assets/comm'
 
-const lang = useLangStore().lang
-const title = useTipsStore()
 const baseStore = useBaseStore()
 const table = userTableStore()
-const popdata = usepopdataStore()
 
-const helper = new Helper(table, lang, baseStore, popdata)
+
+const helper = new Helper(table, baseStore)
 
 const { PlatformInfo } = storeToRefs(baseStore)
 
 table.setTableHeight();
 
-const divHeightStyle = {height: parseInt(table.tableHeight*0.56) + 'px'}
+const divHeightStyle = { height: parseInt(table.tableHeight * 0.56) + 'px' }
 
 onMounted(() => {
   initGridTablePlatformInfo()
@@ -79,40 +74,41 @@ function initGridTablePlatformInfo() {
 
         <div class="tab-content" style="padding-right:18px;padding-left:2px;">
 
-          <div id="tabbable_PlatformInfo_Generic" class="tab-pane fade in active" style="padding-bottom: 5px;" :style="divHeightStyle">
+          <div id="tabbable_PlatformInfo_Generic" class="tab-pane fade in active" style="padding-bottom: 5px;"
+            :style="divHeightStyle">
             <div class="well">
               <div class="row">
-                <div class="col-xs-3 mintip" :title="title.PlatformInfo.Generic.SystemProductName">
+                <div class="col-xs-3 mintip" :title="$t('title.PlatformInfo.Generic.SystemProductName')">
                   SystemProductName<a id="btnradiobox_PlatformInfo_Generic_SystemProductName"
                     style="text-decoration:none" v-on:click="helper.btnradioboxclick($event)">&nbsp;<img
                       :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="PlatformInfo.Generic.SystemProductName">
                 </div>
-                <div class="col-xs-3 mintip" :title="title.PlatformInfo.Generic.MLB">
+                <div class="col-xs-3 mintip" :title="$t('title.PlatformInfo.Generic.MLB')">
                   MLB<input type="text" class="form-control" v-model="PlatformInfo.Generic.MLB">
                 </div>
-                <div class="col-xs-3 mintip" :title="title.PlatformInfo.Generic.SystemSerialNumber">
+                <div class="col-xs-3 mintip" :title="$t('title.PlatformInfo.Generic.SystemSerialNumber')">
                   SystemSerialNumber<a style="text-decoration:none" target="_blank"
                     :href="'https://checkcoverage.apple.com/cn/zh?sn=' + PlatformInfo.Generic.SystemSerialNumber">&nbsp;<img
                       :src="helper.getImgURL('check')" class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="PlatformInfo.Generic.SystemSerialNumber">
                 </div>
 
-                <div class="col-xs-3 mintip" :title="title.PlatformInfo.Generic.SystemUUID">
+                <div class="col-xs-3 mintip" :title="$t('title.PlatformInfo.Generic.SystemUUID')">
                   SystemUUID<a style="text-decoration:none" v-on:click="btnSystemUUIDclick">&nbsp;<img
                       :src="helper.getImgURL('generate')" class="ctrlicon"></a>&nbsp;<input type="text"
                     class="form-control" v-model="PlatformInfo.Generic.SystemUUID">
                 </div>
-                <div class="col-xs-3 mintip" :title="title.PlatformInfo.Generic.ROM">
+                <div class="col-xs-3 mintip" :title="$t('title.PlatformInfo.Generic.ROM')">
                   ROM<a style="text-decoration:none" v-on:click="opbtnromclick">&nbsp;<img
                       :src="helper.getImgURL('generate')" class="ctrlicon"></a>&nbsp;
                   <input type="text" class="form-control" v-model="PlatformInfo.Generic.ROM">
                 </div>
-                <div class="col-xs-3 mintip" :title="title.PlatformInfo.Generic.ProcessorType">
+                <div class="col-xs-3 mintip" :title="$t('title.PlatformInfo.Generic.ProcessorType')">
                   ProcessorType<input type="text" class="form-control" v-model="PlatformInfo.Generic.ProcessorType">
                 </div>
 
-                <div class="col-xs-3 mintip" :title="title.PlatformInfo.Generic.SystemMemoryStatus">
+                <div class="col-xs-3 mintip" :title="$t('title.PlatformInfo.Generic.SystemMemoryStatus')">
                   SystemMemoryStatus<a id="btnradiobox_PlatformInfo_Generic_SystemMemoryStatus"
                     style="text-decoration:none" v-on:click="helper.btnradioboxclick($event)">&nbsp;<img
                       :src="helper.getImgURL('edit')" class="ctrlicon"></a>&nbsp;
@@ -123,7 +119,8 @@ function initGridTablePlatformInfo() {
               <div class="checkbox" style="margin-top: 20px">
 
                 <template v-for="(item, index) in PlatformInfo.Generic" :key="index">
-                  <label v-if="typeof (item) === 'boolean'" class="mintip" :title="title.PlatformInfo.Generic[index]">
+                  <label v-if="typeof (item) === 'boolean'" class="mintip"
+                    :title="$t('title.PlatformInfo.Generic.' + index)">
                     <input type="checkbox" class="ace" v-model="PlatformInfo.Generic[index]" />
                     <span class="lbl"> {{ index }}</span>
                   </label>
@@ -134,7 +131,8 @@ function initGridTablePlatformInfo() {
             </div>
           </div>
 
-          <div id="tabbable_PlatformInfo_DataHub" class="tab-pane fade in" style="padding-bottom: 5px;" :style="divHeightStyle">
+          <div id="tabbable_PlatformInfo_DataHub" class="tab-pane fade in" style="padding-bottom: 5px;"
+            :style="divHeightStyle">
             <div class="well">
               <div class="row">
                 <div class="col-xs-3">
@@ -191,12 +189,13 @@ function initGridTablePlatformInfo() {
           </div>
 
 
-          <div id="tabbable_PlatformInfo_Memory" class="tab-pane fade in" style="padding-bottom: 5px;" :style="divHeightStyle">
+          <div id="tabbable_PlatformInfo_Memory" class="tab-pane fade in" style="padding-bottom: 5px;"
+            :style="divHeightStyle">
             <table id="gridtable_PlatformInfo_MemoryDevices"></table>
             <span class="grey pull-right">
               <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_PlatformInfo_MemoryDevices'"><img
-                    :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                    :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
               </template>
             </span>
 
@@ -235,7 +234,8 @@ function initGridTablePlatformInfo() {
 
 
 
-          <div id="tabbable_PlatformInfo_PlatformNVRAM" class="tab-pane fade in" style="padding-bottom: 5px;" :style="divHeightStyle">
+          <div id="tabbable_PlatformInfo_PlatformNVRAM" class="tab-pane fade in" style="padding-bottom: 5px;"
+            :style="divHeightStyle">
             <div class="well">
               <div class="row">
                 <div class="col-xs-3">
@@ -268,7 +268,8 @@ function initGridTablePlatformInfo() {
             </div>
           </div>
 
-          <div id="tabbable_PlatformInfo_SMBIOS" class="tab-pane fade in" style="padding-bottom: 5px;" :style="divHeightStyle">
+          <div id="tabbable_PlatformInfo_SMBIOS" class="tab-pane fade in" style="padding-bottom: 5px;"
+            :style="divHeightStyle">
             <div class="well">
               <div class="row">
                 <div class="col-xs-3">
@@ -381,7 +382,7 @@ function initGridTablePlatformInfo() {
       <div class="well">
         <div class="row">
 
-          <div class="col-xs-3 mintip" :title="title.PlatformInfo.root.UpdateSMBIOSMode">
+          <div class="col-xs-3 mintip" :title="$t('title.PlatformInfo.root.UpdateSMBIOSMode')">
             UpdateSMBIOSMode<a id="btnradiobox_PlatformInfo_root_UpdateSMBIOSMode" style="text-decoration:none"
               v-on:click="helper.btnradioboxclick($event)">&nbsp;<img :src="helper.getImgURL('edit')"
                 class="ctrlicon"></a>&nbsp;
@@ -391,7 +392,7 @@ function initGridTablePlatformInfo() {
 
         <div class="checkbox" style="margin-top: 20px">
           <template v-for="(item, index) in PlatformInfo.root" :key="index">
-            <label v-if="typeof (item) === 'boolean'" class="mintip" :title="title.PlatformInfo.root[index]">
+            <label v-if="typeof (item) === 'boolean'" class="mintip" :title="$t('title.PlatformInfo.root.' + index)">
               <input type="checkbox" class="ace" v-model="PlatformInfo.root[index]" />
               <span class="lbl"> {{ index }}</span>
             </label>

@@ -112,9 +112,7 @@ export default class PlistParser {
         return [date.toString(), 'date'];
 
       case 'integer':
-
-        return [parseInt(this._textValue(parent_node), 10), 'integer'];
-
+        return [parseInt(this._textValue(parent_node) === 'NaN' ? 0 : this._textValue(parent_node), 10), 'integer'];
       case 'real':
 
         return [parseFloat(this._textValue(parent_node)), 'real'];

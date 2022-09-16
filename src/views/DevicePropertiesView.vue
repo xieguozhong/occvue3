@@ -1,24 +1,21 @@
 <script setup>
 import { useBaseStore } from '../stores/index'
 import { userTableStore } from '../stores/table'
-import { useLangStore } from '../stores/lang'
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
-import  Helper  from '../assets/helper'
-import  {plistEncode,enabledFormat,formatInteger}  from '../assets/comm'
-
-const lang = useLangStore().lang
+import Helper from '../assets/helper'
+import { plistEncode } from '../assets/comm'
 
 const baseStore = useBaseStore()
 const table = userTableStore()
 
-const helper = new Helper(table, lang, baseStore)
+const helper = new Helper(table, baseStore)
 
 const { DeviceProperties } = storeToRefs(baseStore)
 
 onMounted(() => {
-    initGridTableDeviceProperties()
+  initGridTableDeviceProperties()
 })
 
 function initGridTableDeviceProperties() {
@@ -51,7 +48,7 @@ function initGridTableDeviceProperties() {
   //增加行选中事件
   objGT_DeviceProperties_AddLeft.jqGrid('setGridParam', {
     onSelectRow: function (rowid) {
-      
+
       helper.resetSubGridTable(rowid, "DeviceProperties_AddRight", DeviceProperties.value, 'Add');
     }
   }).trigger("reloadGrid");
@@ -115,7 +112,7 @@ function initGridTableDeviceProperties() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_DeviceProperties_AddLeft'"><img
-                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -124,7 +121,7 @@ function initGridTableDeviceProperties() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_DeviceProperties_AddRight'"><img
-                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -138,7 +135,7 @@ function initGridTableDeviceProperties() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_DeviceProperties_DeleteLeft'"><img
-                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -147,7 +144,7 @@ function initGridTableDeviceProperties() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_DeviceProperties_DeleteRight'"><img
-                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
                   </template>
                 </span>
               </div>

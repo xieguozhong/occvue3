@@ -1,13 +1,14 @@
-import { fillLangString, htmlEscape, hextoBase64, showTipModal } from './comm'
+import { toNumber, htmlEscape, hextoBase64, showTipModal } from './comm'
+import i18n from "@/i18n/index"
+
 export default class Generateplist {
     /**
      * @param {*} table table
-     * @param {*} lang lang
      * @param {*} base base
      */
-    constructor(table, lang, base) {
+    constructor(table, base) {
         this.table = table
-        this.lang = lang
+        this.lang = i18n.global.tm('lang')
         this.base = base
     }
 
@@ -57,7 +58,7 @@ export default class Generateplist {
         //格式特殊处理，只是为了美观
         plistContext = plistContext.replace('<dict/></dict>', '<dict/>\n        </dict>')
 
-        localStorage.setItem('lastOpenCorePlistConfig', plistContext)
+        //localStorage.setItem('lastOpenCorePlistConfig', plistContext)
 
         return plistContext
     }
@@ -200,14 +201,14 @@ export default class Generateplist {
 
         //2 Boot
         miscContext += '<key>Boot</key><dict>'
-        miscContext += '<key>ConsoleAttributes</key><integer>' + this.toNumber(this.base.Misc.Boot['ConsoleAttributes']) + '</integer>'
+        miscContext += '<key>ConsoleAttributes</key><integer>' + toNumber(this.base.Misc.Boot['ConsoleAttributes']) + '</integer>'
         miscContext += '<key>HibernateMode</key>' + this.addCharstring(this.base.Misc.Boot['HibernateMode'])
 
         miscContext += '<key>HideAuxiliary</key>' + this.toBoolStringStrict(this.base.Misc.Boot['HideAuxiliary'])
         miscContext += '<key>LauncherOption</key>' + this.addCharstring(this.base.Misc.Boot['LauncherOption'])
         miscContext += '<key>LauncherPath</key>' + this.addCharstring(this.base.Misc.Boot['LauncherPath'])
 
-        miscContext += '<key>PickerAttributes</key><integer>' + this.toNumber(this.base.Misc.Boot['PickerAttributes']) + '</integer>'
+        miscContext += '<key>PickerAttributes</key><integer>' + toNumber(this.base.Misc.Boot['PickerAttributes']) + '</integer>'
         miscContext += '<key>PickerAudioAssist</key>' + this.toBoolStringStrict(this.base.Misc.Boot['PickerAudioAssist'])
         miscContext += '<key>PickerMode</key>' + this.addCharstring(this.base.Misc.Boot['PickerMode'])
         miscContext += '<key>PickerVariant</key>' + this.addCharstring(this.base.Misc.Boot['PickerVariant'])
@@ -217,19 +218,19 @@ export default class Generateplist {
         if (this.base.configisMOD === true) {
             miscContext += '<key>SkipCustomEntryCheck</key>' + this.toBoolStringStrict(this.base.Misc.Boot['SkipCustomEntryCheck'])
         }
-        miscContext += '<key>TakeoffDelay</key><integer>' + this.toNumber(this.base.Misc.Boot['TakeoffDelay']) + '</integer>'
-        miscContext += '<key>Timeout</key><integer>' + this.toNumber(this.base.Misc.Boot['Timeout']) + '</integer>'
+        miscContext += '<key>TakeoffDelay</key><integer>' + toNumber(this.base.Misc.Boot['TakeoffDelay']) + '</integer>'
+        miscContext += '<key>Timeout</key><integer>' + toNumber(this.base.Misc.Boot['Timeout']) + '</integer>'
 
         //3 Debug
         miscContext += '</dict><key>Debug</key><dict>'
         miscContext += '<key>AppleDebug</key>' + this.toBoolStringStrict(this.base.Misc.Debug['AppleDebug'])
         miscContext += '<key>ApplePanic</key>' + this.toBoolStringStrict(this.base.Misc.Debug['ApplePanic'])
         miscContext += '<key>DisableWatchDog</key>' + this.toBoolStringStrict(this.base.Misc.Debug['DisableWatchDog'])
-        miscContext += '<key>DisplayDelay</key><integer>' + this.toNumber(this.base.Misc.Debug['DisplayDelay']) + '</integer>'
-        miscContext += '<key>DisplayLevel</key><integer>' + this.toNumber(this.base.Misc.Debug['DisplayLevel']) + '</integer>'
+        miscContext += '<key>DisplayDelay</key><integer>' + toNumber(this.base.Misc.Debug['DisplayDelay']) + '</integer>'
+        miscContext += '<key>DisplayLevel</key><integer>' + toNumber(this.base.Misc.Debug['DisplayLevel']) + '</integer>'
         miscContext += '<key>LogModules</key>' + this.addCharstring(this.base.Misc.Debug['LogModules'])
         miscContext += '<key>SysReport</key>' + this.toBoolStringStrict(this.base.Misc.Debug['SysReport'])
-        miscContext += '<key>Target</key><integer>' + this.toNumber(this.base.Misc.Debug['Target']) + '</integer>'
+        miscContext += '<key>Target</key><integer>' + toNumber(this.base.Misc.Debug['Target']) + '</integer>'
 
         //4 Entries
         miscContext += '</dict><key>Entries</key>'
@@ -238,18 +239,18 @@ export default class Generateplist {
         //5 Security
         miscContext += '<key>Security</key><dict>'
         miscContext += '<key>AllowSetDefault</key>' + this.toBoolStringStrict(this.base.Misc.Security['AllowSetDefault'])
-        miscContext += '<key>ApECID</key><integer>' + this.toNumber(this.base.Misc.Security['ApECID']) + '</integer>'
+        miscContext += '<key>ApECID</key><integer>' + toNumber(this.base.Misc.Security['ApECID']) + '</integer>'
         miscContext += '<key>AuthRestart</key>' + this.toBoolStringStrict(this.base.Misc.Security['AuthRestart'])
         miscContext += '<key>BlacklistAppleUpdate</key>' + this.toBoolStringStrict(this.base.Misc.Security['BlacklistAppleUpdate'])
         miscContext += '<key>DmgLoading</key>' + this.addCharstring(this.base.Misc.Security['DmgLoading'])
         miscContext += '<key>EnablePassword</key>' + this.toBoolStringStrict(this.base.Misc.Security['EnablePassword'])
-        miscContext += '<key>ExposeSensitiveData</key><integer>' + this.toNumber(this.base.Misc.Security['ExposeSensitiveData']) + '</integer>'
-        miscContext += '<key>HaltLevel</key><integer>' + this.toNumber(this.base.Misc.Security['HaltLevel']) + '</integer>'
+        miscContext += '<key>ExposeSensitiveData</key><integer>' + toNumber(this.base.Misc.Security['ExposeSensitiveData']) + '</integer>'
+        miscContext += '<key>HaltLevel</key><integer>' + toNumber(this.base.Misc.Security['HaltLevel']) + '</integer>'
         miscContext += '<key>PasswordHash</key>'
         miscContext += '<data>' + hextoBase64(this.base.Misc.Security['PasswordHash']) + '</data>'
         miscContext += '<key>PasswordSalt</key>'
         miscContext += '<data>' + hextoBase64(this.base.Misc.Security['PasswordSalt']) + '</data>'
-        miscContext += '<key>ScanPolicy</key><integer>' + this.toNumber(this.base.Misc.Security['ScanPolicy']) + '</integer>'
+        miscContext += '<key>ScanPolicy</key><integer>' + toNumber(this.base.Misc.Security['ScanPolicy']) + '</integer>'
         miscContext += '<key>SecureBootModel</key>' + this.addCharstring(this.base.Misc.Security['SecureBootModel'])
         miscContext += '<key>Vault</key>' + this.addCharstring(this.base.Misc.Security['Vault'])
 
@@ -261,15 +262,15 @@ export default class Generateplist {
         //Serial.Custom
         if (this.base.Misc.Serial['Override'] === true) {
             miscContext += '<key>Custom</key><dict>'
-            miscContext += '<key>BaudRate</key><integer>' + this.toNumber(this.base.Misc.Serial.Custom['BaudRate']) + '</integer>'
-            miscContext += '<key>ClockRate</key><integer>' + this.toNumber(this.base.Misc.Serial.Custom['ClockRate']) + '</integer>'
-            miscContext += '<key>ExtendedTxFifoSize</key><integer>' + this.toNumber(this.base.Misc.Serial.Custom['ExtendedTxFifoSize']) + '</integer>'
-            miscContext += '<key>FifoControl</key><integer>' + this.toNumber(this.base.Misc.Serial.Custom['FifoControl']) + '</integer>'
-            miscContext += '<key>LineControl</key><integer>' + this.toNumber(this.base.Misc.Serial.Custom['LineControl']) + '</integer>'
+            miscContext += '<key>BaudRate</key><integer>' + toNumber(this.base.Misc.Serial.Custom['BaudRate']) + '</integer>'
+            miscContext += '<key>ClockRate</key><integer>' + toNumber(this.base.Misc.Serial.Custom['ClockRate']) + '</integer>'
+            miscContext += '<key>ExtendedTxFifoSize</key><integer>' + toNumber(this.base.Misc.Serial.Custom['ExtendedTxFifoSize']) + '</integer>'
+            miscContext += '<key>FifoControl</key><integer>' + toNumber(this.base.Misc.Serial.Custom['FifoControl']) + '</integer>'
+            miscContext += '<key>LineControl</key><integer>' + toNumber(this.base.Misc.Serial.Custom['LineControl']) + '</integer>'
             miscContext += '<key>PciDeviceInfo</key><data>' + hextoBase64(this.base.Misc.Serial.Custom['PciDeviceInfo']) + '</data>'
-            miscContext += '<key>RegisterAccessWidth</key><integer>' + this.toNumber(this.base.Misc.Serial.Custom['RegisterAccessWidth']) + '</integer>'
-            miscContext += '<key>RegisterBase</key><integer>' + this.toNumber(this.base.Misc.Serial.Custom['RegisterBase']) + '</integer>'
-            miscContext += '<key>RegisterStride</key><integer>' + this.toNumber(this.base.Misc.Serial.Custom['RegisterStride']) + '</integer>'
+            miscContext += '<key>RegisterAccessWidth</key><integer>' + toNumber(this.base.Misc.Serial.Custom['RegisterAccessWidth']) + '</integer>'
+            miscContext += '<key>RegisterBase</key><integer>' + toNumber(this.base.Misc.Serial.Custom['RegisterBase']) + '</integer>'
+            miscContext += '<key>RegisterStride</key><integer>' + toNumber(this.base.Misc.Serial.Custom['RegisterStride']) + '</integer>'
             miscContext += '<key>UseHardwareFlowControl</key>' + this.toBoolStringStrict(this.base.Misc.Serial.Custom['UseHardwareFlowControl'])
             miscContext += '<key>UseMmio</key>' + this.toBoolStringStrict(this.base.Misc.Serial.Custom['UseMmio'])
             miscContext += '</dict>'
@@ -506,10 +507,10 @@ export default class Generateplist {
                         strreturn += toBoolString(rightData[it].Volume)
                         break
                     case 'integer':
-                        strreturn += '<integer>' + this.toNumber(rightData[it].Value) + '</integer>'
+                        strreturn += '<integer>' + toNumber(rightData[it].Value) + '</integer>'
                         break
                     case 'real':
-                        strreturn += '<real>' + this.toNumber(rightData[it].Value, parseFloat) + '</real>'
+                        strreturn += '<real>' + toNumber(rightData[it].Value, parseFloat) + '</real>'
                         break
                     default: //如果是其他就直接用数据类型包裹值
                         strreturn += '<' + rightDataType + '>' + htmlEscape(rightData[it].Volume) + '</' + rightDataType + '>'
@@ -544,10 +545,10 @@ export default class Generateplist {
                         strreturn += this.addCharstring(theData[it])
                         break
                     case 'integer':
-                        strreturn += '<integer>' + this.toNumber(theData[it]) + '</integer>'
+                        strreturn += '<integer>' + toNumber(theData[it]) + '</integer>'
                         break
                     case 'real':
-                        strreturn += '<real>' + this.toNumber(theData[it], parseFloat) + '</real>'
+                        strreturn += '<real>' + toNumber(theData[it], parseFloat) + '</real>'
                         break
                     default:
                         strreturn += '<' + itDataType + '>' + htmlEscape(theData[it]) + '</' + itDataType + '>'
@@ -599,10 +600,10 @@ export default class Generateplist {
                         subcontext += toBoolString(rightData[i].Value)
                         break
                     case 'integer':
-                        subcontext += '<integer>' + this.toNumber(rightData[i].Value) + '</integer>'
+                        subcontext += '<integer>' + toNumber(rightData[i].Value) + '</integer>'
                         break
                     case 'real':
-                        subcontext += '<real>' + this.toNumber(rightData[i].Value, parseFloat) + '</real>'
+                        subcontext += '<real>' + toNumber(rightData[i].Value, parseFloat) + '</real>'
                         break
                     default:
                         subcontext += '<' + rightDataType + '>' + htmlEscape(rightData[i].Value) + '</' + rightDataType + '>'
@@ -619,7 +620,7 @@ export default class Generateplist {
         for (let it in boolData) {
             strreturn += this.addKey(it)
             if (intData.indexOf(it) >= 0) {
-                strreturn += '<integer>' + this.toNumber(boolData[it]) + '</integer>'
+                strreturn += '<integer>' + toNumber(boolData[it]) + '</integer>'
             } else {
                 strreturn += this.toBoolStringStrict(boolData[it])
             }
@@ -686,7 +687,7 @@ export default class Generateplist {
                 }
                 // 如果在整形字段列表中
                 else if (intFileds.indexOf(it) >= 0) {
-                    tmpreturn += '<integer>' + this.toNumber(itemData) + '</integer>'
+                    tmpreturn += '<integer>' + toNumber(itemData) + '</integer>'
                 }
                 //否则就是其他string boolean了
                 else {
@@ -795,21 +796,7 @@ export default class Generateplist {
         return tempObj
     }
 
-    /**
-     * 1 检测num变量是否为数值
-     * 2 如果不是弹出提示信息,返回0
-     * 3 如果是根据第二个参数转换后返回, 默认为parseInt函数
-     * @param {String} num
-     * @param {Function} fnparse
-     * @returns Number
-     */
-    toNumber(num, fnparse = parseInt) {
-        if (isNaN(num)) {
-            showTipModal(fillLangString(this.lang.toNumberError, num), 'warning')
-            return 0
-        }
-        return fnparse(num)
-    }
+    
 
     /**
      * 输入 true 转为 '<true/>' ,其他的一律转为 '<false/>'

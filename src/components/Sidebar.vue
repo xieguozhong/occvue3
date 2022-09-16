@@ -1,9 +1,8 @@
 <script setup>
 import { useBaseStore } from '../stores/index'
-import { useTipsStore } from '../stores/Tips_zh-CN'
 
 const base = useBaseStore()
-const title = useTipsStore()
+
 </script>
 
 <template>
@@ -23,7 +22,7 @@ const title = useTipsStore()
                         </li> -->
 
                         <li v-bind:class="{ active: base.getRoot === item }">
-                            <a href="#" v-on:click="base.setRoot(item)" :title="title[item].title">
+                            <a href="#" v-on:click="base.setRoot(item)" :title="$t('title.' + item + '.title')">
                                 <i class="menu-icon fa fa-caret-right"></i>
                                 {{ item }}
                             </a>

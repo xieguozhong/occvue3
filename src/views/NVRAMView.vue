@@ -1,20 +1,17 @@
 <script setup>
 import { useBaseStore } from '../stores/index'
 import { userTableStore } from '../stores/table'
-import { useTipsStore } from '../stores/Tips_zh-CN'
-import { useLangStore } from '../stores/lang'
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import Helper from '../assets/helper'
-import { plistEncode, enabledFormat, formatInteger } from '../assets/comm'
+import { plistEncode } from '../assets/comm'
 
-const lang = useLangStore().lang
-const title = useTipsStore()
+
 const baseStore = useBaseStore()
 const table = userTableStore()
 
-const helper = new Helper(table, lang, baseStore)
+const helper = new Helper(table, baseStore)
 
 const { NVRAM } = storeToRefs(baseStore)
 
@@ -150,7 +147,7 @@ function initGridTableNVRAM() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_NVRAM_AddLeft'"><img
-                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -159,7 +156,7 @@ function initGridTableNVRAM() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_NVRAM_AddRight'"><img
-                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -173,7 +170,7 @@ function initGridTableNVRAM() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_NVRAM_DeleteLeft'"><img
-                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -182,7 +179,7 @@ function initGridTableNVRAM() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_NVRAM_DeleteRight'"><img
-                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -196,7 +193,7 @@ function initGridTableNVRAM() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_NVRAM_LegacySchemaLeft'"><img
-                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -205,7 +202,7 @@ function initGridTableNVRAM() {
                 <span class="grey pull-right">
                   <template v-for="(item, index) in baseStore.OCbuttons4" :key="index">
                     <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_NVRAM_LegacySchemaRight'"><img
-                        :src='helper.getImgURL(item)' class="ctrlicon" :title="lang[item]"></a>&nbsp;
+                        :src='helper.getImgURL(item)' class="ctrlicon" :title="$t('lang.' + item)"></a>&nbsp;
                   </template>
                 </span>
               </div>
@@ -220,7 +217,7 @@ function initGridTableNVRAM() {
 
         <div class="checkbox">
           <template v-for="(item, index) in NVRAM.root" :key="index">
-            <label v-if="typeof (item) === 'boolean'" class="mintip" :title="title.NVRAM[index]">
+            <label v-if="typeof (item) === 'boolean'" class="mintip" :title="$t('title.NVRAM.' + index)">
               <input type="checkbox" class="ace" v-model="NVRAM.root[index]" />
               <span class="lbl"> {{ index }}</span>
             </label>

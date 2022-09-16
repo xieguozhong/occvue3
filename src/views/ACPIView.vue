@@ -1,22 +1,17 @@
 <script setup>
 import { useBaseStore } from '../stores/index'
 import { userTableStore } from '../stores/table'
-import { useTipsStore } from '../stores/Tips_zh-CN'
-import { useLangStore } from '../stores/lang'
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import Helper from '../assets/helper'
 import { plistEncode, enabledFormat, formatInteger } from '../assets/comm'
 
-const lang = useLangStore().lang
-
-let title = useTipsStore()
 
 const baseStore = useBaseStore()
 const table = userTableStore()
 
-const helper = new Helper(table, lang, baseStore)
+const helper = new Helper(table, baseStore)
 
 const { ACPI } = storeToRefs(baseStore)
 
@@ -144,8 +139,8 @@ function testclick() {
 
 <template>
     <div class="row">
-        
-        <div class="col-xs-12" >
+
+        <div class="col-xs-12">
             <div class="tabbable">
                 <ul class="nav nav-tabs">
                     <li class="active">
@@ -163,23 +158,17 @@ function testclick() {
                     <div id="tabbable_ACPI_Add" class="tab-pane fade in active" style="padding-bottom: 5px">
                         <table id="gridtable_ACPI_Add"></table>
                         <span class="grey pull-left">
-                            <label for="File_ACPI_Add"
-                                ><img :src="helper.getImgURL('fileadd')" style="padding: 0px; height: 16px; cursor: pointer" />
-                                <input
-                                    type="file"
-                                    id="File_ACPI_Add"
-                                    style="position: absolute; clip: rect(0 0 0 0)"
-                                    accept=".aml"
-                                    @change="helper.addFile('File_ACPI_Add')"
-                                    multiple
-                                />
+                            <label for="File_ACPI_Add"><img :src="helper.getImgURL('fileadd')"
+                                    style="padding: 0px; height: 16px; cursor: pointer" />
+                                <input type="file" id="File_ACPI_Add" style="position: absolute; clip: rect(0 0 0 0)"
+                                    accept=".aml" @change="helper.addFile('File_ACPI_Add')" multiple />
                             </label>
                         </span>
                         <span class="grey pull-right">
                             <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_ACPI_Add'">
-                                    <img :src="helper.getImgURL(item)" class="ctrlicon" :title="lang[item]" /></a
-                                >&nbsp;
+                                    <img :src="helper.getImgURL(item)" class="ctrlicon" :title="$t('lang.' + item)" />
+                                </a>&nbsp;
                             </template>
                         </span>
                     </div>
@@ -189,8 +178,8 @@ function testclick() {
                         <span class="grey pull-right">
                             <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_ACPI_Delete'">
-                                    <img :src="helper.getImgURL(item)" class="ctrlicon" :title="lang[item]" /></a
-                                >&nbsp;
+                                    <img :src="helper.getImgURL(item)" class="ctrlicon"
+                                        :title="$t('lang.' + item)" /></a>&nbsp;
                             </template>
                         </span>
                     </div>
@@ -200,30 +189,32 @@ function testclick() {
                         <span class="grey pull-right">
                             <template v-for="(item, index) in baseStore.OCbuttons5" :key="index">
                                 <a @click="helper.pubImgButtonClick" :id="'btn' + item + '_ACPI_Patch'">
-                                    <img :src="helper.getImgURL(item)" class="ctrlicon" :title="lang[item]" /></a
-                                >&nbsp;
+                                    <img :src="helper.getImgURL(item)" class="ctrlicon"
+                                        :title="$t('lang.' + item)" /></a>&nbsp;
                             </template>
                         </span>
                     </div>
                 </div>
             </div>
 
-            
-                <h3 class="header smaller lighter blue">Quirks</h3>
-                <div class="checkbox well">
-                    <template v-for="(item, index) in ACPI.Quirks" :key="index">
-                        <label v-if="typeof item === 'boolean' && index !== 'EnableForAll'" class="mintip" :title="title.ACPI.Quirks[index]">
-                            <input type="checkbox" class="ace" v-model="ACPI.Quirks[index]" />
-                            <span class="lbl"> {{ index }}</span>
-                        </label>
-                    </template>
 
-                    <label v-show="baseStore.configisMOD === true" class="mintip" :title="title.ACPI.Quirks.EnableForAll">
-                        <input type="checkbox" class="ace" v-model="ACPI.Quirks.EnableForAll" />
-                        <span class="lbl"> EnableForAll</span>
+            <h3 class="header smaller lighter blue">Quirks</h3>
+            <div class="checkbox well">
+                <template v-for="(item, index) in ACPI.Quirks" :key="index">
+                    <label v-if="typeof item === 'boolean' && index !== 'EnableForAll'" class="mintip"
+                        :title="$t('title.ACPI.Quirks.' + index)">
+                        <input type="checkbox" class="ace" v-model="ACPI.Quirks[index]" />
+                        <span class="lbl"> {{ index }}</span>
                     </label>
-                </div>
-            
+                </template>
+
+                <label v-show="baseStore.configisMOD === true" class="mintip"
+                    :title="$t('title.ACPI.Quirks.EnableForAll')">
+                    <input type="checkbox" class="ace" v-model="ACPI.Quirks.EnableForAll" />
+                    <span class="lbl"> EnableForAll</span>
+                </label>
+            </div>
+
         </div>
     </div>
 </template>
